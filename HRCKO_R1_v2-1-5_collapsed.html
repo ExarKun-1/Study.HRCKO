@@ -344,12 +344,6 @@ function sUnlock() {
   document.getElementById('sformlock').style.display = 'none';
 
     // Automatski skupi video kad se otkljuca forma
-    var area = document.getElementById('video-collapse-area');
-    var btn = document.getElementById('video-toggle-btn');
-    if (area && btn && area.style.display !== 'none') {
-        area.style.display = 'none';
-        btn.innerHTML = 'Rasklopi video &#9660;';
-    }
 
   var st = document.getElementById('svstatus');
   st.textContent = '✅ Video odgledan';
