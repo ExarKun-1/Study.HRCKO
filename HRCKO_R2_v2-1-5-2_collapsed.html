@@ -1125,7 +1125,7 @@
 <label><input name="fundus_upala_pat" onchange="autoCheckInflam('fundus')" type="radio" value="trakasta"/> Trakasta</label>
 </div>
 </div><div class="igv-wrapper"><label style="font-weight:bold;color:#880e4f;cursor:pointer;"><input id="igv1_fundus" onchange="autoUncheckNormal('fundus_norm');toggleIGV('igv1_fundus_panel')" type="checkbox"/> 🔴 IGV1 – Izolirani gastrični varikoziteti (fundus)</label><div class="hidden igv-panel" id="igv1_fundus_panel"><span class="igv-title">Crveni znakovi:</span><div style="display:flex;gap:15px;flex-wrap:wrap;"><label><input name="igv1_red" type="radio" value="bez crvenih znakova"/> ✅ Bez crvenih znakova</label><label><input name="igv1_red" type="radio" value="sa crvenim znakovima"/> 🔴 Sa crvenim znakovima</label></div></div></div><div class="bio-dynamic-wrapper" data-base-loc="fundus" data-type="pat" data-loc-name="Fundus PATOLOGIJA" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
-</div></div></div><textarea class="pathology-input" id="fundus_txt" oninput="autoUncheckNormal('fundus_norm')" rows="1"></textarea><div class="sub-opt" style="margin-top:5px; background:#e8f4f8; padding:6px; border-radius:5px; border:1px solid #b3d4fc; width:95%;"><label style="font-weight:bold; color:#0277bd;"><input type="checkbox" id="fundus_atrofija" onchange="toggleFundusAtrofija()"> 📉 Atrofija sluznice</label></div>
+</div></div></div><textarea class="pathology-input" id="fundus_txt" oninput="autoUncheckNormal('fundus_norm')" rows="1"></textarea>
 </div>
 </div>
 <!-- KORPUS (WITH INFLAM) -->
@@ -1159,22 +1159,24 @@
 <div style="display:flex;gap:15px;flex-wrap:wrap;">
 <label><input name="igv2_korpus_red" type="radio" value="bez crvenih znakova"/> Bez crvenih znakova</label>
 <label><input name="igv2_korpus_red" type="radio" value="sa crvenim znakovima"/> Sa crvenim znakovima</label>
-</div></div></div><div class="bio-dynamic-wrapper" data-base-loc="korpus" data-type="pat" data-loc-name="Korpus PATOLOGIJA" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
-</div></div></div><textarea class="pathology-input" id="korpus_txt" oninput="autoUncheckNormal('korpus_norm')" rows="1"></textarea><div class="sub-opt" style="margin-top:5px; background:#e8f4f8; padding:8px; border-radius:5px; border:1px solid #b3d4fc; width:95%;">
-    <label style="font-weight:bold; color:#0277bd;"><input type="checkbox" id="kt_korpus_active" onchange="syncKT('korpus_main')"> 📉 Atrofija sluznice (Kimura-Takemoto proširena)</label>
-    <div id="kt_korpus_options" class="hidden" style="margin-top:8px;">
-        <div style="display:flex; flex-wrap:wrap; gap:15px; margin-bottom:15px; align-items:center;">
-            <svg viewBox="0 0 320 145" style="width:100%; max-width:350px; background:#ffffff; border:1px solid #b3d4fc; border-radius:6px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);"><defs><path id="stomach_base" d="M 100 20 C 100 10, 70 10, 50 30 C 20 60, 20 110, 60 130 C 100 140, 130 130, 140 110 C 140 100, 110 100, 100 80 C 90 60, 110 30, 120 20 Z" fill="#ffebee" stroke="#ffcdd2" stroke-width="2" /></defs><g transform="translate(10, 5)"><text x="35" y="10" font-size="11" font-family="Arial, sans-serif" font-weight="bold" fill="#0277bd">Closed type (C)</text><use href="#stomach_base" /><path d="M 100 80 Q 90 90 105 110" fill="none" stroke="#1e88e5" stroke-width="2" stroke-dasharray="3,3"/><text x="110" y="100" font-size="10" fill="#1e88e5" font-weight="bold" font-family="Arial">C1</text><path d="M 95 55 Q 60 80 85 125" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="3,3"/><text x="75" y="85" font-size="10" fill="#2e7d32" font-weight="bold" font-family="Arial">C2</text><path d="M 110 30 Q 30 60 70 130" fill="none" stroke="#f57c00" stroke-width="2" stroke-dasharray="3,3"/><text x="45" y="65" font-size="10" fill="#f57c00" font-weight="bold" font-family="Arial">C3</text></g><g transform="translate(160, 5)"><text x="40" y="10" font-size="11" font-family="Arial, sans-serif" font-weight="bold" fill="#c62828">Open type (O)</text><use href="#stomach_base" /><path d="M 100 20 Q 20 60 65 130" fill="none" stroke="#8e24aa" stroke-width="2" stroke-dasharray="3,3"/><text x="35" y="55" font-size="10" fill="#8e24aa" font-weight="bold" font-family="Arial">O1</text><path d="M 80 15 Q 10 70 55 125" fill="none" stroke="#d81b60" stroke-width="2" stroke-dasharray="3,3"/><text x="15" y="75" font-size="10" fill="#d81b60" font-weight="bold" font-family="Arial">O2</text><path d="M 60 20 Q 5 80 40 115" fill="none" stroke="#d32f2f" stroke-width="2" stroke-dasharray="3,3"/><text x="15" y="105" font-size="10" fill="#d32f2f" font-weight="bold" font-family="Arial">O3</text></g></svg>
-            <div style="flex:1; min-width:250px; font-size: 0.85em;"><div style="display:flex; gap:10px;"><div style="flex:1; border:1px solid #b3d4fc; border-radius:4px; overflow:hidden;"><div style="background:#e8f4f8; padding:4px 6px; font-weight:bold; color:#0277bd;">C - Mala krivina</div><div style="padding:4px 6px; border-bottom:1px solid #eee;"><strong>C-1</strong>: Antrum do angulusa</div><div style="padding:4px 6px; border-bottom:1px solid #eee;"><strong>C-2</strong>: Donja trećina korpusa</div><div style="padding:4px 6px; background:#fff;"><strong>C-3</strong>: Gornja trećina korpusa</div></div><div style="flex:1; border:1px solid #f5c6cb; border-radius:4px; overflow:hidden;"><div style="background:#f8d7da; padding:4px 6px; font-weight:bold; color:#c82333;">O - Velika krivina</div><div style="padding:4px 6px; border-bottom:1px solid #eee;"><strong>O-1</strong>: Prelazi kardiju</div><div style="padding:4px 6px; border-bottom:1px solid #eee;"><strong>O-2</strong>: Pola prednje stijenke</div><div style="padding:4px 6px; background:#fff;"><strong>O-3</strong>: Cijeli korpus (totalna)</div></div></div></div>
-        </div>
-        <div style="font-size:0.85em; color:#555; margin-bottom:5px;">Odaberi stupanj (Zatvoreni tip):</div><div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;"><label><input type="radio" name="kt_klasifikacija" value="C-1 (samo antrum)" onchange="syncKT('radio')"> C-1</label><label><input type="radio" name="kt_klasifikacija" value="C-2 (do donje trećine korpusa)" onchange="syncKT('radio')"> C-2</label><label><input type="radio" name="kt_klasifikacija" value="C-3 (do srednje/gornje trećine korpusa)" onchange="syncKT('radio')"> C-3</label></div>
-        <div style="font-size:0.85em; color:#555; margin-bottom:5px;">Odaberi stupanj (Otvoreni tip):</div><div style="display:flex; gap:10px; flex-wrap:wrap;"><label><input type="radio" name="kt_klasifikacija" value="O-1 (atrofija blago prelazi prednju stijenku korpusa)" onchange="syncKT('radio')"> O-1</label><label><input type="radio" name="kt_klasifikacija" value="O-2 (atrofija obuhvaća veći dio prednje stijenke)" onchange="syncKT('radio')"> O-2</label><label><input type="radio" name="kt_klasifikacija" value="O-3 (potpuna atrofija korpusa)" onchange="syncKT('radio')"> O-3</label></div>
-        <div style="margin-top:6px; font-size:0.85em; color:#d32f2f; font-weight:bold;" id="kt_fundus_warning" class="hidden">* O-3 tip atrofije automatski onesposobljava uredan nalaz Fundusa. Kod O-1 i O-2 fundus je slobodan za opis.</div>
-    </div>
+</div></div></div><div class="sub-opt" style="margin-top:8px; background:#e8f4f8; padding:10px; border-radius:5px; border:1px solid #b3d4fc; width:96%;">
+<label style="font-weight:bold; color:#0277bd;"><input type="checkbox" id="kt_korpus_active" onchange="syncKT()"> 📉 Atrofija sluznice (Kimura-Takemoto)</label>
+<div id="kt_korpus_options" class="hidden" style="margin-top:10px;">
+<div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
+<label><input type="radio" name="kt_klasifikacija" value="C-1 (samo antrum)" onchange="syncKT()"> <strong>C-1</strong> <small style="color:#555;">antrum</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="C-2 (do donje trećine korpusa)" onchange="syncKT()"> <strong>C-2</strong> <small style="color:#555;">donja trećina korpusa</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="C-3 (do srednje/gornje trećine korpusa)" onchange="syncKT()"> <strong>C-3</strong> <small style="color:#555;">gornja trećina korpusa</small></label>
+</div>
+<div style="display:flex; gap:10px; flex-wrap:wrap;">
+<label><input type="radio" name="kt_klasifikacija" value="O-1 (atrofija blago prelazi prednju stijenku korpusa)" onchange="syncKT()"> <strong>O-1</strong> <small style="color:#c62828;">prelazi kardiju</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="O-2 (atrofija obuhvaća veći dio prednje stijenke)" onchange="syncKT()"> <strong>O-2</strong> <small style="color:#c62828;">pola prednje stijenke</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="O-3 (potpuna atrofija korpusa)" onchange="syncKT()"> <strong>O-3</strong> <small style="color:#c62828;">cijeli korpus + fundus</small></label>
+</div>
+<div id="kt_fundus_warning" class="hidden" style="margin-top:6px; font-size:0.85em; color:#d32f2f; font-weight:bold;">* O-3: atrofija automatski obuhvaća i fundus.</div>
 </div>
 </div>
-</div>
-<!-- ANTRUM (WITH INFLAM) -->
+<div class="bio-dynamic-wrapper" data-base-loc="korpus" data-type="pat" data-loc-name="Korpus PATOLOGIJA" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
+</div></div></div><textarea class="pathology-input" id="korpus_txt" oninput="autoUncheckNormal('korpus_norm')" rows="1"></textarea><!-- ANTRUM (WITH INFLAM) -->
 <div class="finding-row">
 <div class="finding-head" id="acc-antrum-head" onclick="toggleAccordion('acc-antrum')">Antrum <span class="acc-arrow">▼</span></div>
 <div class="finding-controls" id="acc-antrum-body">
@@ -1206,7 +1208,7 @@
 <label><input name="igv2_antrum_red" type="radio" value="bez crvenih znakova"/> Bez crvenih znakova</label>
 <label><input name="igv2_antrum_red" type="radio" value="sa crvenim znakovima"/> Sa crvenim znakovima</label>
 </div></div></div><div class="bio-dynamic-wrapper" data-base-loc="antrum" data-type="pat" data-loc-name="Antrum PATOLOGIJA" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
-</div></div></div><textarea class="pathology-input" id="antrum_txt" oninput="autoUncheckNormal('antrum_norm')" rows="1"></textarea><div class="sub-opt" style="margin-top:5px; background:#e8f4f8; padding:6px; border-radius:5px; border:1px solid #b3d4fc; width:95%;"><label style="font-weight:bold; color:#0277bd;"><input type="checkbox" id="kt_antrum_c1" onchange="syncKT('antrum')"> 📉 Atrofija sluznice (Kimura-Takemoto C-1)</label></div>
+</div></div></div><textarea class="pathology-input" id="antrum_txt" oninput="autoUncheckNormal('antrum_norm')" rows="1"></textarea>
 </div>
 </div>
 <div class="finding-row">
@@ -1547,19 +1549,17 @@
     }
     
     function updateAtrophyTexts() {
-        let kt_antrum_c1     = document.getElementById('kt_antrum_c1');
-        let kt_korpus_active = document.getElementById('kt_korpus_active');
-        let fundus_atrofija  = document.getElementById('fundus_atrofija');
-        let radioChecked     = document.querySelector('input[name="kt_klasifikacija"]:checked');
-        let ktVal            = radioChecked ? radioChecked.value : "";
+        let k_cb     = document.getElementById('kt_korpus_active');
+        let ktActive = k_cb && k_cb.checked;
+        let radioChecked = document.querySelector('input[name="kt_klasifikacija"]:checked');
+        let ktVal    = radioChecked ? radioChecked.value : "";
 
-        let isC1     = ktVal.includes('C-1');
-        let isO3     = ktVal.includes('O-3');
-        let ktActive = kt_korpus_active && kt_korpus_active.checked;
+        let isC1 = ktVal.includes('C-1');
+        let isO3 = ktVal.includes('O-3');
 
-        let antrumAtro = (kt_antrum_c1 && kt_antrum_c1.checked) || ktActive;
+        let antrumAtro = ktActive;
         let korpusAtro = ktActive && !isC1;
-        let fundusAtro = (fundus_atrofija && fundus_atrofija.checked) || isO3;
+        let fundusAtro = ktActive && isO3;
 
         function applyAtro(segId, isAtro) {
             let norm = document.getElementById(segId + '_norm');
@@ -1570,17 +1570,11 @@
                 norm.disabled = true;
                 if (window.toggleInput) toggleInput(segId + '_txt', norm);
                 let val = txt.value.trim();
-                if (val === '' || val.includes('uredna') || val.includes('urednog') ||
-                    val.includes('urednih') || val.includes('uredan') ||
-                    val.includes('atrofičn') || val.includes('Atrofičn')) {
-                    txt.value = '';
-                }
+                if (val === '' || /uredan|uredna|urednog|urednih|atrofi/i.test(val)) txt.value = '';
             } else {
                 norm.disabled = false;
                 let val = txt.value.trim();
-                if (val.includes('atrofičn') || val.includes('Atrofičn')) {
-                    txt.value = '';
-                }
+                if (/atrofi/i.test(val)) txt.value = '';
             }
         }
 
@@ -1595,29 +1589,15 @@
         }
     }
 
-    function syncKT(source) {
-        let a_cb = document.getElementById('kt_antrum_c1');
-        let k_cb = document.getElementById('kt_korpus_active');
+    function syncKT() {
+        let k_cb   = document.getElementById('kt_korpus_active');
         let k_opts = document.getElementById('kt_korpus_options');
-        let radios = document.getElementsByName('kt_klasifikacija');
-
-        if (source === 'antrum') {
-            if (a_cb.checked) {
-                k_cb.checked = true; k_opts.classList.remove('hidden');
-                radios.forEach(r => { if (r.value.includes('C-1')) r.checked = true; });
-            } else {
-                radios.forEach(r => { if (r.value.includes('C-1') && r.checked) { r.checked = false; k_cb.checked = false; k_opts.classList.add('hidden'); } });
-            }
-        } else if (source === 'korpus_main') {
-            if (k_cb.checked) { k_opts.classList.remove('hidden'); } 
-            else { k_opts.classList.add('hidden'); radios.forEach(r => r.checked = false); a_cb.checked = false; }
-        } else if (source === 'radio') {
-            let checkedRadio = document.querySelector('input[name="kt_klasifikacija"]:checked');
-            if (checkedRadio) {
-                k_cb.checked = true; k_opts.classList.remove('hidden');
-                if (checkedRadio.value.includes('C-1')) { a_cb.checked = true; } 
-                else { a_cb.checked = false; }
-            }
+        if (!k_cb) return;
+        if (k_cb.checked) {
+            k_opts.classList.remove('hidden');
+        } else {
+            k_opts.classList.add('hidden');
+            document.getElementsByName('kt_klasifikacija').forEach(r => r.checked = false);
         }
         updateAtrophyTexts();
     }
@@ -2254,10 +2234,9 @@
         let _kon   = _kact && _kact.checked;
         let _isC1  = _kv.includes('C-1');
         let _isO3  = _kv.includes('O-3');
-        let _fAtEl = document.getElementById('fundus_atrofija');
-        if (segId === 'antrum' && _kon)                                  return '';
-        if (segId === 'korpus' && _kon && !_isC1)                        return '';
-        if (segId === 'fundus' && ((_fAtEl && _fAtEl.checked) || _isO3)) return '';
+        if (segId === 'antrum' && _kon)            return '';
+        if (segId === 'korpus' && _kon && !_isC1)  return '';
+        if (segId === 'fundus' && _kon && _isO3)   return '';
         var el = document.getElementById(segId + '_upala');
         if (!el || !el.checked) return '';
         var r    = document.querySelector('input[name="' + patName + '"]:checked');
@@ -2671,9 +2650,7 @@
             let _ktOn         = _ktActive && _ktActive.checked;
             let _isC1         = _ktVal.includes('C-1');
             let _isO3         = _ktVal.includes('O-3');
-            let _fundusAtroEl = document.getElementById('fundus_atrofija');
-            let _fundusAtroCb = _fundusAtroEl && _fundusAtroEl.checked;
-            let _fundusAtro   = _fundusAtroCb || _isO3;
+            let _fundusAtro = _isO3 && _ktOn;
 
             let _segUnderAtro = false;
             if (normId === 'antrum_norm' && _ktOn)           _segUnderAtro = true;
@@ -2698,7 +2675,7 @@
                     ? segName + ' je ' + manual + (manual.endsWith('.') ? '' : '.')
                     : manual + (manual.endsWith('.') ? '' : '.');
             }
-            if (normId === 'fundus_norm' && _fundusAtroCb && !_isO3) {
+            if (normId === 'fundus_norm' && _fundusAtro) {
                 return 'Sluznica fundusa je atrofična.';
             }
             if (_segUnderAtro) return '';
@@ -2889,9 +2866,7 @@
         if (d_lac) dijagnoze.push('Sy. Mallory-Weiss');
 
         let d_ktKorpus = document.getElementById('kt_korpus_active') && document.getElementById('kt_korpus_active').checked;
-        let d_ktAntrum = document.getElementById('kt_antrum_c1') && document.getElementById('kt_antrum_c1').checked;
-        let d_fundusAtro = document.getElementById('fundus_atrofija') && document.getElementById('fundus_atrofija').checked;
-        if (d_ktKorpus || d_ktAntrum || d_fundusAtro) {
+        if (d_ktKorpus) {
             let ktSel = document.querySelector('input[name="kt_klasifikacija"]:checked');
             if (ktSel) dijagnoze.push('Gastritis atrophica (Kimura-Takemoto ' + ktSel.value.split(' ')[0] + ')');
             else dijagnoze.push('Gastritis atrophica');
@@ -3122,7 +3097,9 @@ ${postReport}
             var eggimScore = egEl ? (parseInt(egEl.textContent)||0) : 0;
             var ktRadio = document.querySelector('input[name="kt_klasifikacija"]:checked');
             var ktVal = ktRadio ? ktRadio.value : "";
-            var ktHigh = (ktVal.indexOf('C-3')>=0||ktVal.indexOf('O-1')>=0||ktVal.indexOf('O-2')>=0||ktVal.indexOf('O-3')>=0);
+            var _ktCb = document.getElementById('kt_korpus_active');
+            var _kon  = _ktCb && _ktCb.checked;
+            var ktHigh = _kon && (ktVal.indexOf('C-3')>=0||ktVal.indexOf('O-1')>=0||ktVal.indexOf('O-2')>=0||ktVal.indexOf('O-3')>=0);
             var fam_el = document.getElementById('fam_ca_zeluca');
             var fam_ca = fam_el && fam_el.checked;
             var reasons = [];
