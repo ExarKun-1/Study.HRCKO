@@ -165,7 +165,7 @@ body.dark-mode #write-timer-sticker{background:#283593;}
   <p style="font-size:.74em;color:#bbb;margin-top:12px">&#9201; Timer &nbsp;|&nbsp; &#128274; Lock &nbsp;|&nbsp; &#9729;&#65039; Drive upload</p>
 </div>
 </div>
- 
+
 <div id="svpanel" style="display:none">
   <div class="sinfobar">
     <span>&#128300; HR&#268;KO STUDIJA</span>
@@ -181,35 +181,33 @@ body.dark-mode #write-timer-sticker{background:#283593;}
     <div class="sprogbar"><div id="svprogfill"></div></div>
   </div>
 </div>
- 
+
 <div id="sformlock" style="display:none">
   <div class="lockbox">
     <span class="licon">&#127916;</span>
     <h3>Pogledajte video</h3>
-    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Forma se otklju&#269;ava automatski.</p>
-    <div id="lprogwrap"><div id="lprogfill"></div></div>
-    <small id="lprogtxt">Pokrenite video...</small>
-    <div id="vidwarn"></div>
-    <br><br>
-    <button onclick="sForceUnlock()" style="background:none;border:1px dashed #ccc;color:#bbb;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:.78em">Problem s videom? Otklju&#269;aj ru&#269;no</button>
+    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Kad završite, kliknite dugme ispod.</p>
+    <div id="vidwarn" style="background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:.85em;color:#795548;text-align:center;display:none"></div>
+    <br>
+    <button onclick="sForceUnlock()" style="background:#1976d2;border:none;color:#fff;padding:12px 28px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:bold;width:100%;">&#9989; Video odgledan &ndash; Otključaj obrazac</button>
   </div>
 </div>
- 
+
 <button id="dark-toggle" onclick="toggleDarkMode()" title="Tamni/Svjetli način">🌙 Dark</button>
- 
+
 <!-- WRITE TIMER STICKER -->
 <div id="write-timer-sticker">&#9997;&#65039; 00:00</div>
- 
+
 <div class="container">
 <h2>&#127956; HRCKO STUDIJA &ndash; Krug 1 &bull; Slobodan upis</h2>
- 
+
 <!-- ZONA A: SLOBODNI OPIS -->
 <section id="zone-a-section">
 <h3>&#128221; Slobodan endoskopski nalaz <span class="zone-badge zone-a">ZONA A</span></h3>
 <p style="font-size:0.85em;color:#666;margin-bottom:8px;">Opišite slobodnim tekstom sve što vidite na videu, kao da pišete standardni nalaz.</p>
 <textarea id="r1_slobodni_nalaz" rows="9" placeholder="npr. Jednjak uredne sluznice. Kardija kompetentna. Želudac..."></textarea>
 </section>
- 
+
 <!-- SNEXTSEC -->
 <div id="snextsec">
 <p style="font-weight:bold;color:#2e7d32;margin-bottom:12px">&#10003; Video pogledano. Mo&#382;ete preuzeti CSV ili pri&#263;i na sljede&#263;i slu&#269;aj.</p>
@@ -217,7 +215,7 @@ body.dark-mode #write-timer-sticker{background:#283593;}
 <button class="btn-submit" onclick="sNext()">&#9654;&nbsp; Sljede&#263;i slu&#269;aj</button>
 </div>
 </div>
- 
+
 <script>
 // ===== HRCKO STUDIJA – KRUG 1 =====
 var SC = {
@@ -256,7 +254,7 @@ var SC = {
 var SAU = 'https://script.google.com/macros/s/AKfycbxzFvzPkRuUZ7x9I4zU5Hm5MolpQfjbk7yVomW8dcvpfds_fTk7m9cob8mBspWuq9B3jg/exec';
 var MW  = 120; // sekundi
 var sR='', sC='', sPct=0, sUn=false, sTmr=null, sExp='', sWriteStart=null, sWriteSec=0, sWriteTmr=null;
- 
+
 function sStart() {
   sR = (document.getElementById('sinput-rater').value || '').trim().toUpperCase();
   sC = document.getElementById('sinput-case').value;
@@ -278,9 +276,6 @@ function sStart() {
   document.getElementById('svstatus').style.background = 'rgba(255,255,255,.15)';
   document.getElementById('svstatus').style.color = '';
   document.getElementById('svpct').textContent = '0%';
-  document.getElementById('svprogfill').style.width = '0%';
-  document.getElementById('lprogfill').style.width  = '0%';
-  document.getElementById('lprogtxt').textContent = 'Pokrenite video...';
   document.getElementById('snextsec').style.display = 'none';
   // Sakrij i resetiraj sticker
   var sticker = document.getElementById('write-timer-sticker');
@@ -315,50 +310,30 @@ function sStart() {
   var dat = document.getElementById('datum');
   if (dat && !dat.value) dat.value = new Date().toISOString().split('T')[0];
   document.getElementById('sformlock').style.display = 'flex';
-  sTicker();
+  document.getElementById('svstatus').textContent = '▶ Pogledajte video';
+  document.getElementById('video-collapse-area').style.display = 'block';
 }
- 
-function sTicker() {
-  var el = 0;
-  document.getElementById('svstatus').textContent = '⏱ Gledanje...';
-  sTmr = setInterval(function() {
-    if (document.visibilityState !== 'visible') return;
-    el++;
-    var p  = Math.min((el / MW) * 100, 100);
-    sPct   = p;
-    var r  = Math.max(MW - el, 0);
-    var mm = String(Math.floor(r / 60)).padStart(2,'0');
-    var ss = String(r % 60).padStart(2,'0');
-    document.getElementById('svprogfill').style.width = p.toFixed(1) + '%';
-    document.getElementById('lprogfill').style.width  = p.toFixed(1) + '%';
-    document.getElementById('svpct').textContent = Math.floor(p) + '%';
-    document.getElementById('lprogtxt').textContent  = 'Preostalo: ' + mm + ':' + ss;
-    if (el >= MW && !sUn) { clearInterval(sTmr); sUnlock(); }
-  }, 1000);
-}
- 
+
 function sForceUnlock() {
   sPct = 100;
   if (sTmr) clearInterval(sTmr);
-  document.getElementById('svprogfill').style.width = '100%';
-  document.getElementById('lprogfill').style.width  = '100%';
   sUnlock();
 }
- 
+
 function toggleDarkMode() {
   document.body.classList.toggle('dark-mode');
   const btn = document.getElementById('dark-toggle');
   btn.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light' : '🌙 Dark';
   localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? '1' : '0');
 }
- 
+
 function calcGRACE() {
   let s = 0;
   document.querySelectorAll('.grace-sel').forEach(el => s += parseInt(el.value)||0);
   const el = document.getElementById('grace-score');
   if (el) { el.textContent = s; el.parentElement.style.color = s < 7 ? '#c62828' : '#1565c0'; }
 }
- 
+
 function sUnlock() {
   sUn = true;
   document.getElementById('sformlock').style.display = 'none';
@@ -376,17 +351,18 @@ function sUnlock() {
   if (!document.getElementById('egg-anim')) {
     var s = document.createElement('style');
     s.id = 'egg-anim';
-    s.textContent = '@keyframes eggSpin{0%{transform:rotate(0) scale(1)}40%{transform:rotate(180deg) scale(1.3)}100%{transform:rotate(360deg) scale(1)}}.egg-spin{display:inline-block;animation:eggSpin 1.2s ease-in-out}';
+    s.textContent = '@keyframes eggWobble{0%{transform:rotate(-15deg)}25%{transform:rotate(15deg)}50%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}100%{transform:rotate(0deg)}}.egg-wobble{display:inline-block;animation:eggWobble 0.6s ease-in-out;}';
     document.head.appendChild(s);
   }
-  t.innerHTML = '<span class="egg-spin" id="egg-spin-el">🥚</span> Na dobrom ste putu! Nastavite pisati!';
-  setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e) e.textContent='🐣'; }, 1200);
+  t.innerHTML = '<span class="egg-wobble" id="egg-spin-el">🥚</span> Na dobrom ste putu. Nastavite!';
+  setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e){ e.textContent='🐣'; e.className=''; }}, 800);
+  setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e){ e.textContent='🐥'; }}, 1600);
   document.body.appendChild(t);
-  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3200);
+  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3800);
   document.getElementById('snextsec').style.display = 'block';
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
- 
+
 function calcEREFS() {
   var total = 0;
   ['erefs_e','erefs_r','erefs_ex','erefs_f','erefs_s'].forEach(function(id){
@@ -401,12 +377,12 @@ function calcEGGIM() {
   });
   var el = document.getElementById('eggim_score'); if(el) el.textContent = total;
 }
- 
+
 function eCSV(v) {
   var s = String(v == null ? '' : v);
   return (s.indexOf(',') >= 0 || s.indexOf('"') >= 0 || s.indexOf('\n') >= 0) ? '"' + s.replace(/"/g,'""') + '"' : s;
 }
- 
+
 function sDownloadCSV() {
   var d = {};
   d.STUDY_FORMAT     = 'SLOBODAN_UPIS';
@@ -445,7 +421,7 @@ function sDownloadCSV() {
     }).catch(function(e){console.warn(e);});
   }
 }
- 
+
 function sFormReset() {
   document.querySelectorAll('input[type=checkbox]').forEach(function(el){el.checked=false;});
   document.querySelectorAll('input[type=radio]').forEach(function(el){el.checked=false;});
@@ -465,7 +441,7 @@ function sFormReset() {
   var sticker = document.getElementById('write-timer-sticker');
   if (sticker) { sticker.style.display='none'; sticker.textContent='✍️ 00:00'; }
 }
- 
+
 function sNext() {
   if (!confirm('Jeste li završili? Forma će se resetirati.')) return;
   if (sTmr) clearInterval(sTmr);
@@ -486,7 +462,7 @@ function sNext() {
   document.getElementById('snextsec').style.display='none';
   document.getElementById('study-overlay').style.display='flex';
 }
- 
+
 // ===== TAJMER PISANJA =====
 // Pokreće se SAMO kad korisnik tipka u textarea i SAMO nakon otključavanja forme
 document.addEventListener('input', function(e) {
@@ -506,10 +482,10 @@ document.addEventListener('input', function(e) {
     if (sticker) sticker.style.display = 'block';
   }
 });
- 
+
 // Dark mode restore
 (function(){ if(localStorage.getItem('darkMode')==='1') { document.body.classList.add('dark-mode'); var b=document.getElementById('dark-toggle'); if(b) b.textContent='☀️ Light'; } })();
- 
+
 // FUNKCIJA ZA COLLAPSE VIDEA
 function toggleVideoCollapse() {
   var area = document.getElementById('video-collapse-area');
