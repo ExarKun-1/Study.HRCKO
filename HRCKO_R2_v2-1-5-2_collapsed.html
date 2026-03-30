@@ -439,7 +439,7 @@
     <span id="svcase">&#128203; &ndash;</span>
     <span id="svlevel" style="padding:2px 10px;border-radius:12px;background:rgba(255,255,255,.15)">&ndash;</span>
     <span id="svstatus">&#9208; Pokrenite video</span>
-    <span id="svpct">0%</span>
+    <span id="svpct" style="display:none">0%</span>
       <button id="video-toggle-btn" type="button" onclick="toggleVideoCollapse()" style="margin-left: 15px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: bold; transition: background 0.2s;">Skupi video &#9650;</button>
         </div>
   <div id="video-collapse-area">
@@ -452,12 +452,10 @@
   <div class="lockbox">
     <span class="licon">&#127916;</span>
     <h3>Pogledajte video</h3>
-    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Forma se otklju&#269;ava automatski.</p>
-    <div id="lprogwrap"><div id="lprogfill"></div></div>
-    <small id="lprogtxt">Pokrenite video...</small>
-    <div id="vidwarn"></div>
-    <br><br>
-    <button onclick="sForceUnlock()" style="background:none;border:1px dashed #ccc;color:#bbb;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:.78em">Problem s videom? Otklju&#269;aj ru&#269;no</button>
+    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Kad završite, kliknite dugme ispod.</p>
+    <div id="vidwarn" style="background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:.85em;color:#795548;text-align:center;display:none"></div>
+    <br>
+    <button onclick="sForceUnlock()" style="background:#1976d2;border:none;color:#fff;padding:12px 28px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:bold;width:100%;">&#9989; Video odgledan &ndash; Otključaj obrazac</button>
   </div>
 </div>
 
@@ -3252,9 +3250,6 @@ function sStart() {
   document.getElementById('svstatus').style.background = 'rgba(255,255,255,.15)';
   document.getElementById('svstatus').style.color = '';
   document.getElementById('svpct').textContent = '0%';
-  document.getElementById('svprogfill').style.width = '0%';
-  document.getElementById('lprogfill').style.width  = '0%';
-  document.getElementById('lprogtxt').textContent = 'Pokrenite video...';
   document.getElementById('snextsec').style.display = 'none';
   var raw  = SC[sC] || '';
   var parts = raw.split('|');
@@ -3298,28 +3293,13 @@ function sStart() {
     if (sum) { updatePreSummary(); sum.classList.add('visible'); }
   })();
   document.getElementById('sformlock').style.display = 'flex';
-  sTicker();
+  document.getElementById('svstatus').textContent = '▶ Pogledajte video';
+  document.getElementById('video-collapse-area').style.display = 'block';
+  var toggleBtn = document.getElementById('video-toggle-btn');
+  if (toggleBtn) toggleBtn.innerHTML = 'Skupi video &#9650;';
 }
 
-function sTicker() {
-  var v = document.getElementById("svideo"); var el = v && v.duration && !isNaN(v.duration) ? v.currentTime : 0;
-  document.getElementById('svstatus').textContent = '⏱ Gledanje...';
-  sTmr = setInterval(function() {
-    if (document.visibilityState !== 'visible') return;
-    el++;
-    var p  = Math.min((el / MW) * 100, 100);
-    sPct   = p;
-    var r  = Math.max(MW - el, 0);
-    var mm = String(Math.floor(r / 60)).padStart(2,'0');
-    var ss = String(r % 60).padStart(2,'0');
-    document.getElementById('svprogfill').style.width = p.toFixed(1) + '%';
-    document.getElementById('lprogfill').style.width  = p.toFixed(1) + '%';
-    document.getElementById('svpct').textContent = Math.floor(p) + '%';
-    document.getElementById('lprogtxt').textContent  = 'Preostalo: ' + mm + ':' + ss;
 
-    if (el >= MW && !sUn) { clearInterval(sTmr); sUnlock(); }
-  }, 1000);
-}
 
 function sUnlock() {
   sUn = true;
@@ -3340,13 +3320,14 @@ function sUnlock() {
   if (!document.getElementById('egg-anim')) {
     var s = document.createElement('style');
     s.id = 'egg-anim';
-    s.textContent = '@keyframes eggSpin{0%{transform:rotate(0) scale(1)}40%{transform:rotate(180deg) scale(1.3)}100%{transform:rotate(360deg) scale(1)}}.egg-spin{display:inline-block;animation:eggSpin 1.2s ease-in-out}';
+    s.textContent = '@keyframes eggWobble{0%{transform:rotate(-15deg)}25%{transform:rotate(15deg)}50%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}100%{transform:rotate(0deg)}}.egg-wobble{display:inline-block;animation:eggWobble 0.6s ease-in-out;}';
     document.head.appendChild(s);
-}
-t.innerHTML = '<span class="egg-spin" id="egg-spin-el">🥚</span> Na dobrom ste putu! Nastavite gledati!';
-setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e) e.textContent='🐣'; }, 1200);;
+  }
+  t.innerHTML = '<span id="egg-spin-el" class="egg-wobble">🥚</span> Na dobrom ste putu. Nastavite!';
+  setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e){ e.textContent='🐣'; e.className=''; }}, 800);
+  setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e){ e.textContent='🐥'; }}, 1600);
   document.body.appendChild(t);
-  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3200);
+  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3800);
   document.getElementById('snextsec').style.display = 'block';
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -3354,8 +3335,6 @@ setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e) e.tex
 function sForceUnlock() {
   sPct = 100;
   if (sTmr) clearInterval(sTmr);
-  document.getElementById('svprogfill').style.width = '100%';
-  document.getElementById('lprogfill').style.width  = '100%';
   sUnlock();
 }
 
@@ -3372,7 +3351,7 @@ function sDownloadCSV() {
   d.STUDY_CASE_ID     = sC;
   d.STUDY_RATER_EXP   = sExp;
   d.STUDY_RATER_LEVEL = sExp === 'specialist' ? 'Specijalist (>2000 EGD)' : 'Trainee (≤2000 EGD)';
-  d.STUDY_VIDEO_PCT   = sPct.toFixed(1) + '%';
+  d.STUDY_VIDEO_PCT   = 'N/A';
   d.STUDY_WATCHED     = sUn ? 'DA' : 'NE';
   d.STUDY_TIMESTAMP   = new Date().toISOString();
   var wm2 = String(Math.floor(sWriteSec/60)).padStart(2,'0');
