@@ -2,7 +2,6 @@
 
 <html lang="hr">
 <head>
-
 <meta charset="utf-8"/>
 <title>HRČKO STUDIJA</title>
 <style>
@@ -1423,11 +1422,13 @@
     // GLOBALNE QA FUNKCIJE ---
     let qualityTimerStart = null;
 
-    document.addEventListener('input', function(e) {
+    // Tajmer pisanja — kreće tek kad korisnik klikne prvi checkbox/radio nakon otključavanja
+    document.addEventListener('change', function(e) {
         if (!qualityTimerStart) qualityTimerStart = new Date();
-        // Tajmer pisanja — kreće tek kad je forma otključana i korisnik nešto upiše
-        if (!sUn) return;
-        if (e.target.tagName === 'SELECT') return;
+        if (!sUn) return;  // ignoriraj dok forma nije otključana
+        var tag = e.target.tagName;
+        var type = e.target.type;
+        if (!((tag === 'INPUT' && (type === 'checkbox' || type === 'radio')) || tag === 'SELECT')) return;
         if (!sWriteStart) {
             sWriteStart = Date.now();
             sWriteTmr = setInterval(function() {
@@ -3315,8 +3316,7 @@ function sTicker() {
     document.getElementById('lprogfill').style.width  = p.toFixed(1) + '%';
     document.getElementById('svpct').textContent = Math.floor(p) + '%';
     document.getElementById('lprogtxt').textContent  = 'Preostalo: ' + mm + ':' + ss;
-    var spTr = document.getElementById('sp-trajanje');
-    if (spTr && !sUn) spTr.textContent = '⏳ ' + mm + ':' + ss;
+
     if (el >= MW && !sUn) { clearInterval(sTmr); sUnlock(); }
   }, 1000);
 }
@@ -3331,7 +3331,7 @@ function sUnlock() {
   st.textContent = '✅ Video odgledan';
   st.style.background = 'rgba(76,175,80,.35)';
   st.style.color = '#b9f6ca';
-  // Reset tajmera pisanja — startati će tek kad korisnik počne tipkati/klikati
+  // Reset tajmera pisanja — startati će tek kad korisnik klikne prvi checkbox/radio
   sWriteStart = null;
   sWriteSec = 0;
   if (sWriteTmr) { clearInterval(sWriteTmr); sWriteTmr = null; }
