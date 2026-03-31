@@ -19,32 +19,25 @@ select{border:1px solid #bbb;border-radius:4px;padding:3px 7px;font-size:0.92em}
 textarea{width:100%;border:1px solid #bbb;border-radius:6px;padding:8px;font-size:0.93em;resize:vertical}
 .row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px}
 .col{flex:1;min-width:180px}
-/* GRACE */
 .grace-group{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
 .grace-group label{display:flex;align-items:center;gap:6px}
 .score-display{font-weight:bold;font-size:1.1em;color:#1565c0;background:#e3f2fd;border-radius:5px;padding:4px 14px;display:inline-block;margin-top:6px}
-/* SEGMENTI */
 .r1-seg-row{background:#f8f9ff;border:1px solid #e0e4f7;border-radius:6px;padding:8px 12px;margin-bottom:7px}
 .r1-seglabel{font-weight:bold;color:#283593;font-size:0.92em;display:inline-block;min-width:140px;margin-right:10px}
 .r1-seg-row label{margin-right:12px;font-size:0.92em}
 .r1-sub{margin-top:7px;padding:6px 10px;background:#eef2ff;border-radius:5px;font-size:0.88em}
 .r1-sublabel{font-weight:bold;color:#3949ab;margin-right:8px}
 .r1-sub label{margin-right:8px}
-/* ZONE LABELS */
 .zone-badge{display:inline-block;font-size:0.78em;font-weight:bold;padding:2px 10px;border-radius:12px;margin-left:10px;vertical-align:middle}
 .zone-a{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
 .zone-b{background:#e3f2fd;color:#1565c0;border:1px solid #90caf9}
-/* BIOPSIJA */
 .bio-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap}
 .bio-vial{width:55px;text-align:center}
-/* FOTO */
 .foto-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px 20px;margin-top:6px}
 .foto-grid label{font-size:0.88em}
-/* SUBMIT */
 .btn-submit{background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;border:none;padding:13px 28px;border-radius:9px;font-size:1em;font-weight:bold;cursor:pointer;margin:8px 5px 0}
 .btn-csv{background:linear-gradient(135deg,#1565c0,#0288d1);color:#fff;border:none;padding:13px 28px;border-radius:9px;font-size:1em;font-weight:bold;cursor:pointer;margin:8px 5px 0}
 .btn-submit:hover,.btn-csv:hover{opacity:.88}
-/* DARK MODE */
 #dark-toggle{position:fixed;top:14px;right:16px;background:#333;color:#fff;border:none;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:0.85em;z-index:9998;box-shadow:0 2px 8px rgba(0,0,0,.3)}
 body.dark-mode{background:#121212!important;color:#e0e0e0!important}
 body.dark-mode .container,body.dark-mode section{background:#1e1e1e!important;border-color:#333!important}
@@ -52,7 +45,6 @@ body.dark-mode input,body.dark-mode select,body.dark-mode textarea{background:#2
 body.dark-mode .r1-seg-row{background:#252525!important;border-color:#444!important}
 body.dark-mode .r1-sub{background:#2a2a3a!important}
 body.dark-mode .score-display{background:#1a3a5c!important;color:#90caf9!important}
-/* VIDEO INFRA */
 #study-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#1a237e,#0d47a1);z-index:99999;display:flex;align-items:center;justify-content:center}
 .smodal{background:#fff;border-radius:16px;padding:36px 42px;max-width:520px;width:92%;box-shadow:0 12px 48px rgba(0,0,0,.5);text-align:center}
 .smodal h2{color:#1a237e;margin:0 0 4px;font-size:1.65em}
@@ -82,24 +74,7 @@ body.dark-mode .score-display{background:#1a3a5c!important;color:#90caf9!importa
 #lprogtxt{color:#777;font-size:.88em}
 #vidwarn{background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:.85em;color:#795548;text-align:center;display:none}
 #snextsec{display:none;margin-top:24px;padding:22px 26px;background:#e8f5e9;border-radius:12px;border:2px solid #4caf50;text-align:center}
-/* WRITE TIMER STICKER */
-#write-timer-sticker{
-  display:none;
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#1a237e;
-  color:#fff;
-  padding:9px 18px;
-  border-radius:24px;
-  font-size:0.87em;
-  font-weight:bold;
-  z-index:9999;
-  box-shadow:0 4px 16px rgba(0,0,0,0.28);
-  letter-spacing:1px;
-  pointer-events:none;
-  transition:opacity 0.3s;
-}
+#write-timer-sticker{display:none;position:fixed;bottom:20px;right:20px;background:#1a237e;color:#fff;padding:9px 18px;border-radius:24px;font-size:0.87em;font-weight:bold;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.28);letter-spacing:1px;pointer-events:none;transition:opacity 0.3s;}
 body.dark-mode #write-timer-sticker{background:#283593;}
 </style>
 </head>
@@ -195,20 +170,17 @@ body.dark-mode #write-timer-sticker{background:#283593;}
 
 <button id="dark-toggle" onclick="toggleDarkMode()" title="Tamni/Svjetli način">🌙 Dark</button>
 
-<!-- WRITE TIMER STICKER -->
 <div id="write-timer-sticker">&#9997;&#65039; 00:00</div>
 
 <div class="container">
 <h2>&#127956; HRCKO STUDIJA &ndash; Krug 1 &bull; Slobodan upis</h2>
 
-<!-- ZONA A: SLOBODNI OPIS -->
 <section id="zone-a-section">
 <h3>&#128221; Slobodan endoskopski nalaz <span class="zone-badge zone-a">ZONA A</span></h3>
 <p style="font-size:0.85em;color:#666;margin-bottom:8px;">Opišite slobodnim tekstom sve što vidite na videu, kao da pišete standardni nalaz.</p>
 <textarea id="r1_slobodni_nalaz" rows="9" placeholder="npr. Jednjak uredne sluznice. Kardija kompetentna. Želudac..."></textarea>
 </section>
 
-<!-- SNEXTSEC -->
 <div id="snextsec">
 <p style="font-weight:bold;color:#2e7d32;margin-bottom:12px">&#10003; Video pogledano. Mo&#382;ete preuzeti CSV ili pri&#263;i na sljede&#263;i slu&#269;aj.</p>
 <button class="btn-csv" onclick="sDownloadCSV()">&#11015;&nbsp; PREUZMI STUDY CSV</button>
@@ -236,7 +208,7 @@ var SC = {
   "EGD014": "1cugmaO9yUQZODOH1gkPwFGly5h697ap1",
   "EGD015": "19vU5xPQegm6MIb-HZQefiBX_kXwhL5El",
   "EGD016": "1wGWgu_z70RPT8ROIujzT7JCHMQVVUk-p",
-  "EGD017": "1vTGFtjqRZOHFbfYHMM_TGNmV1yuc4xJv",
+  "EGD017": "1vTGFtjqRZOHFbfYHFMM_TGNmV1yuc4xJv",
   "EGD018": "11_BjhxgB-c7NGW7VVKvpc4Q-WIodGRYD",
   "EGD019": "1Sncb2VPvrNv9Wl_znjXfYqzB5CH2Hv20",
   "EGD020": "1RuW_kHaMvfCev6lvvPHozkxbacBh3a2x",
@@ -252,7 +224,7 @@ var SC = {
   "EGD030": "13rqYpCifJiG3HVRC6jXI32lOKEximExt"
 };
 var SAU = 'https://script.google.com/macros/s/AKfycbxzFvzPkRuUZ7x9I4zU5Hm5MolpQfjbk7yVomW8dcvpfds_fTk7m9cob8mBspWuq9B3jg/exec';
-var MW  = 120; // sekundi
+var MW  = 120;
 var sR='', sC='', sPct=0, sUn=false, sTmr=null, sExp='', sWriteStart=null, sWriteSec=0, sWriteTmr=null;
 
 function sStart() {
@@ -277,7 +249,6 @@ function sStart() {
   document.getElementById('svstatus').style.color = '';
   document.getElementById('svpct').textContent = '0%';
   document.getElementById('snextsec').style.display = 'none';
-  // Sakrij i resetiraj sticker
   var sticker = document.getElementById('write-timer-sticker');
   if (sticker) { sticker.style.display = 'none'; sticker.textContent = '✍️ 00:00'; }
   var raw  = SC[sC] || '';
@@ -341,11 +312,9 @@ function sUnlock() {
   st.textContent = '✅ Video odgledan';
   st.style.background = 'rgba(76,175,80,.35)';
   st.style.color = '#b9f6ca';
-  // Reset tajmera pisanja — startati će tek kad korisnik počne tipkati
   sWriteStart = null;
   sWriteSec = 0;
   if (sWriteTmr) { clearInterval(sWriteTmr); sWriteTmr = null; }
-  // Pokaži toast
   var t = document.createElement('div');
   t.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#4caf50;color:#fff;padding:13px 32px;border-radius:10px;font-weight:bold;z-index:9997;box-shadow:0 4px 20px rgba(0,0,0,.35);font-size:1.05em';
   if (!document.getElementById('egg-anim')) {
@@ -437,7 +406,6 @@ function sFormReset() {
   var gs=document.getElementById('grace-score'); if(gs) gs.textContent='9';
   sPct=0; sUn=false; sWriteSec=0; sWriteStart=null;
   if(sWriteTmr){clearInterval(sWriteTmr);sWriteTmr=null;}
-  // Reset stickera
   var sticker = document.getElementById('write-timer-sticker');
   if (sticker) { sticker.style.display='none'; sticker.textContent='✍️ 00:00'; }
 }
@@ -464,10 +432,9 @@ function sNext() {
 }
 
 // ===== TAJMER PISANJA =====
-// Pokreće se SAMO kad korisnik tipka u textarea i SAMO nakon otključavanja forme
 document.addEventListener('input', function(e) {
-  if (!sUn) return;                          // ignoriraj dok forma nije otključana
-  if (e.target.tagName !== 'TEXTAREA') return; // samo textarea, ne ostali inputi
+  if (!sUn) return;
+  if (e.target.tagName !== 'TEXTAREA') return;
   if (!sWriteStart) {
     sWriteStart = Date.now();
     sWriteTmr = setInterval(function() {
@@ -477,7 +444,6 @@ document.addEventListener('input', function(e) {
       var sticker = document.getElementById('write-timer-sticker');
       if (sticker) sticker.textContent = '✍️ ' + wm + ':' + ws;
     }, 1000);
-    // Pokaži sticker čim korisnik počne pisati
     var sticker = document.getElementById('write-timer-sticker');
     if (sticker) sticker.style.display = 'block';
   }
@@ -499,6 +465,284 @@ function toggleVideoCollapse() {
     btn.innerHTML = 'Rasklopi video &#9660;';
   }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+
+(function() {
+  var now = new Date();
+  if (now.getMonth() !== 3 || now.getDate() !== 1) return; // samo 1. travnja
+
+  // Provjeri je li već viđeno za ovaj rater danas
+  var raterEl = document.getElementById('sinput-rater');
+  var raterId = raterEl ? raterEl.value.trim() : '';
+  // Ako rater nije još upisan, čekamo — hookamo na input
+  function tryShow() {
+    var el = document.getElementById('sinput-rater');
+    if (!el) return;
+    var rid = el.value.trim();
+    if (!rid) return;
+    var key = 'april2026_' + rid;
+    if (localStorage.getItem(key)) return; // već viđeno
+    localStorage.setItem(key, '1');
+    showApril();
+  }
+
+  // Ako je rater već upisan pri loadu (npr. autofill)
+  if (raterId) {
+    var key = 'april2026_' + raterId;
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, '1');
+      showApril();
+    }
+    return;
+  }
+
+  // Inače čekaj da upiše rater ID
+  var rEl = document.getElementById('sinput-rater');
+  if (rEl) rEl.addEventListener('change', tryShow);
+
+  function showApril() {
+    var style = document.createElement('style');
+    style.textContent = [
+      '#april-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;}',
+      '#april-msg1{color:#fff;font-size:clamp(1.4rem,4vw,2.6rem);font-weight:bold;font-family:Arial,sans-serif;text-align:center;padding:0 2rem;opacity:0;transition:opacity 0.8s;}',
+      '#april-msg1.show{opacity:1;}',
+      '#april-msg2{color:#ff3b3b;font-size:clamp(2rem,7vw,5rem);font-weight:bold;font-family:Arial,sans-serif;text-align:center;letter-spacing:0.05em;opacity:0;transition:opacity 0.8s;}',
+      '#april-msg2.show{opacity:1;}',
+      '#april-sub{color:#aaa;font-size:clamp(0.85rem,2vw,1.1rem);font-family:Arial,sans-serif;text-align:center;opacity:0;transition:opacity 0.6s;}',
+      '#april-sub.show{opacity:1;}',
+      '#april-overlay.fadeout{opacity:0;transition:opacity 0.7s;}'
+    ].join('');
+    document.head.appendChild(style);
+
+    var overlay = document.createElement('div'); overlay.id = 'april-overlay';
+    overlay.innerHTML =
+      '<div id="april-msg1">STUDIJA JE ZAVRŠENA!<br>HVALA NA SUDJELOVANJU!</div>' +
+      '<div id="april-msg2">1. APRIL!</div>' +
+      '<div id="april-sub">Nastavite s ispunjavanjem.</div>';
+    document.body.appendChild(overlay);
+
+    setTimeout(function() { document.getElementById('april-msg1').classList.add('show'); }, 300);
+    setTimeout(function() { document.getElementById('april-msg2').classList.add('show'); }, 3500);
+    setTimeout(function() { document.getElementById('april-sub').classList.add('show'); }, 6000);
+    setTimeout(function() { overlay.classList.add('fadeout'); }, 8500);
+    setTimeout(function() { overlay.remove(); }, 9200);
+  }
+})();
+// ══════════════════════════════════════════════
+
+// ══════════════════════════════════════════════
+//  🥚  EASTER EGG — samo za RO7
+// ══════════════════════════════════════════════
+(function() {
+  var EGG_ID   = 'RO7';
+  var INTERVAL = 5 * 60 * 1000; // 5 minuta za sve
+  var eggTimer   = null;
+  var eggElapsed = 0;
+  var eggActive  = false;
+  var toastIdx   = 0;
+  var toastsVIP = [
+    'Polako, polako... jaje te prati!',
+    'Taj nalaz se sam ne ispiše...',
+    'Jaje pozdravlja RO7!',
+    'Brže, brže!',
+    'Hopa, opet ja!',
+    'Ovaj timer ne laže.',
+    'Pauza? Jaje kaže ne!',
+    'Što dulje tipkaš, češće dolazim.'
+  ];
+  var toastsSTD = [
+    'Polako, polako... jaje te prati!',
+    'Taj nalaz se sam ne ispiše...',
+    'Brže, brže!',
+    'Hopa, opet ja!',
+    'Ovaj timer ne laže.',
+    'Pauza? Jaje kaže ne!',
+    'Što dulje tipkaš, češće dolazim.'
+  ];
+  var toastsSTD = [
+    'Polako, polako... jaje te prati!',
+    'Taj nalaz se sam ne ispiše...',
+    'Brže, brže!',
+    'Hopa, opet ja!',
+    'Ovaj timer ne laže.',
+    'Pauza? Jaje kaže ne!',
+    'Što dulje tipkaš, češće dolazim.'
+  ];
+
+  function currentToasts() {
+    return isSpecial() ? toastsVIP : toastsSTD;
+  }
+
+  // Inject CSS
+  var style = document.createElement('style');
+  style.textContent = [
+    '#egg-lane{position:fixed;bottom:0;left:0;width:100%;height:110px;pointer-events:none;z-index:99999;overflow:hidden;display:none}',
+    '.egg-wrapper{position:absolute;bottom:10px;left:-130px;display:flex;flex-direction:column;align-items:center;animation:eggRoll 4.8s cubic-bezier(0.37,0,0.63,1) forwards}',
+    '@keyframes eggRoll{0%{left:-130px;transform:rotate(0deg)}8%{left:2%;transform:rotate(35deg)}92%{left:calc(100% - 10px);transform:rotate(690deg)}100%{left:calc(100% + 130px);transform:rotate(720deg)}}',
+    '.egg-svg{animation:eggWobble 0.32s ease-in-out infinite alternate;transform-origin:center bottom;width:70px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.2))}',
+    '@keyframes eggWobble{0%{transform:scaleX(1.00) scaleY(1.00) rotate(-3deg)}100%{transform:scaleX(0.94) scaleY(1.06) rotate(3deg)}}',
+    '.egg-shadow{width:50px;height:10px;background:radial-gradient(ellipse,rgba(0,0,0,0.18) 0%,transparent 70%);margin-top:-4px;animation:shadowPulse 0.32s ease-in-out infinite alternate}',
+    '@keyframes shadowPulse{0%{transform:scaleX(1.05);opacity:.7}100%{transform:scaleX(.88);opacity:.25}}',
+    '#egg-ground{position:fixed;bottom:108px;left:0;width:100%;height:1px;background:rgba(0,0,0,0.12);pointer-events:none;z-index:99998;opacity:0;transition:opacity .4s}',
+    '#egg-ground.show{opacity:1}',
+    '.egg-trail{position:fixed;pointer-events:none;z-index:99997;font-size:16px;animation:trailFade 1.8s ease-out forwards}',
+    '@keyframes trailFade{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(0.3)}}',
+    '.egg-dust{position:fixed;bottom:115px;pointer-events:none;z-index:99996;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,rgba(200,190,170,0.6) 0%,transparent 70%);animation:dustPuff .9s ease-out forwards}',
+    '@keyframes dustPuff{0%{transform:scale(.2);opacity:.8}100%{transform:scale(2.5);opacity:0}}',
+    '#egg-toast{position:fixed;bottom:125px;left:50%;transform:translateX(-50%) translateY(10px);background:#fff8e1;border:1.5px solid #ffe082;color:#6d4c00;border-radius:10px;padding:9px 20px;font-size:13px;font-weight:bold;font-family:Arial,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,0.15);opacity:0;z-index:100000;white-space:nowrap;pointer-events:none;transition:opacity .35s,transform .35s}',
+    '#egg-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}',
+    '#egg-progress-bar{position:fixed;bottom:0;left:0;height:3px;background:#01696f;transition:width .5s linear;z-index:99995;pointer-events:none;width:0%}'
+  ].join('');
+  document.head.appendChild(style);
+
+  // Inject HTML
+  var lane = document.createElement('div'); lane.id = 'egg-lane';
+  var ground = document.createElement('div'); ground.id = 'egg-ground';
+  var toast = document.createElement('div'); toast.id = 'egg-toast';
+  var pbar = document.createElement('div'); pbar.id = 'egg-progress-bar';
+  document.body.appendChild(lane);
+  document.body.appendChild(ground);
+  document.body.appendChild(toast);
+  document.body.appendChild(pbar);
+
+  function isSpecial() {
+    var el = document.getElementById('sinput-rater');
+    return el && el.value.trim() === EGG_ID;
+  }
+
+  function startEggTimer() {
+    if (eggActive) return;
+    eggActive = true;
+    eggElapsed = 0;
+    eggTimer = setInterval(function() {
+      eggElapsed += 1000;
+      var pct = (eggElapsed / INTERVAL) * 100;
+      pbar.style.width = pct + '%';
+      if (eggElapsed >= INTERVAL) {
+        eggElapsed = 0;
+        launchEgg();
+      }
+    }, 1000);
+  }
+
+  function stopEggTimer() {
+    eggActive = false;
+    clearInterval(eggTimer);
+    eggElapsed = 0;
+    pbar.style.width = '0%';
+  }
+
+  // R1 slobodan upis — prati tipkanje u textarea (isto kao sWriteStart)
+  document.addEventListener('input', function(e) {
+    if (typeof sUn === 'undefined' || !sUn) return;
+    if (e.target.tagName !== 'TEXTAREA') return;
+    if (!eggActive) startEggTimer();
+  });
+
+  // Reset timera kad se mijenja rater
+  var raterEl = document.getElementById('sinput-rater');
+  if (raterEl) {
+    raterEl.addEventListener('input', function() {
+      stopEggTimer();
+    });
+  }
+
+  // 🥚 BRZI CSV hook — hookami tek nakon što se DOM fully loada
+  window.addEventListener('load', function() {
+    var _origDownload = window.sDownloadCSV;
+    window.sDownloadCSV = function() {
+      if (typeof _origDownload === 'function') _origDownload.apply(this, arguments);
+      var elapsed = (typeof sWriteStart !== 'undefined' && sWriteStart) ? (Date.now() - sWriteStart) : Infinity;
+      if (elapsed < 2 * 60 * 1000) {
+        setTimeout(function() {
+          showEggToast('Ovo je bilo impresivno brzo! Sigurno ne varaš? 🤔');
+          animateEgg();
+        }, 1600);
+      }
+    };
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'E') launchEgg();
+  });
+
+  function launchEgg() {
+    var t = currentToasts();
+    showEggToast(t[toastIdx % t.length]);
+    toastIdx++;
+    animateEgg();
+  }
+
+  function showEggToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 4500);
+  }
+
+  function animateEgg() {
+    lane.style.display = 'block';
+    ground.classList.add('show');
+
+    var wrap = document.createElement('div');
+    wrap.className = 'egg-wrapper';
+    wrap.innerHTML = '<svg class="egg-svg" viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<ellipse cx="40" cy="56" rx="32" ry="38" fill="#FFF8E1"/>' +
+      '<ellipse cx="40" cy="56" rx="32" ry="38" stroke="#E8C84A" stroke-width="2.5"/>' +
+      '<ellipse cx="30" cy="36" rx="9" ry="6" fill="white" opacity="0.45" transform="rotate(-20 30 36)"/>' +
+      '<ellipse cx="30" cy="50" rx="4.5" ry="5" fill="#2d2516"/>' +
+      '<ellipse cx="50" cy="50" rx="4.5" ry="5" fill="#2d2516"/>' +
+      '<circle cx="31.8" cy="48" r="1.8" fill="white"/>' +
+      '<circle cx="51.8" cy="48" r="1.8" fill="white"/>' +
+      '<path d="M26 43 Q30 40 34 43" stroke="#2d2516" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+      '<path d="M46 43 Q50 40 54 43" stroke="#2d2516" stroke-width="2" fill="none" stroke-linecap="round"/>' +
+      '<ellipse cx="40" cy="57" rx="3" ry="2" fill="#F4A950"/>' +
+      '<path d="M29 63 Q40 73 51 63" stroke="#E88C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+      '<ellipse cx="20" cy="60" rx="6" ry="4" fill="#FFB3B3" opacity="0.65"/>' +
+      '<ellipse cx="60" cy="60" rx="6" ry="4" fill="#FFB3B3" opacity="0.65"/>' +
+      '<path d="M40 18 L44 25 L38 30 L43 35" stroke="#E8C84A" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="M28 90 Q25 96 20 94" stroke="#F4A950" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '<path d="M52 90 Q55 96 60 94" stroke="#F4A950" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+      '</svg><div class="egg-shadow"></div>';
+    lane.appendChild(wrap);
+
+    wrap.addEventListener('animationend', function() {
+      wrap.remove();
+      lane.style.display = 'none';
+      ground.classList.remove('show');
+    });
+
+    // Prašina
+    [8,22,38,55,72,88].forEach(function(pct, i) {
+      setTimeout(function() {
+        var d = document.createElement('div');
+        d.className = 'egg-dust';
+        d.style.left = pct + '%';
+        document.body.appendChild(d);
+        d.addEventListener('animationend', function() { d.remove(); });
+      }, i * 500);
+    });
+
+    // Zvjezdice
+    var stars = ['✨','⭐','💫','🌟'];
+    var sc = 0;
+    var si = setInterval(function() {
+      if (sc >= 7) { clearInterval(si); return; }
+      var t = document.createElement('div');
+      t.className = 'egg-trail';
+      t.textContent = stars[Math.floor(Math.random() * stars.length)];
+      t.style.left = (4 + sc * 13) + '%';
+      t.style.bottom = '115px';
+      document.body.appendChild(t);
+      t.addEventListener('animationend', function() { t.remove(); });
+      sc++;
+    }, 420);
+  }
+
+})();
+// ══════════════════════════════════════════════
+
+}); // DOMContentLoaded
+
 </script>
 </body>
 </html>
