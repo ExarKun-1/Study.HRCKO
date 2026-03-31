@@ -239,6 +239,8 @@ function sStart() {
   sPct=0; sUn=false; sWriteSec=0; sWriteStart=null;
   if (sWriteTmr) { clearInterval(sWriteTmr); sWriteTmr=null; }
   if (sTmr) clearInterval(sTmr);
+  // 🎭 1. April provjera
+  if (typeof tryAprilJoke === 'function') tryAprilJoke(sR);
   document.getElementById('study-overlay').style.display = 'none';
   document.getElementById('svpanel').style.display     = 'block';
   document.getElementById('svrater').textContent = '(R) ' + sR;
@@ -469,38 +471,6 @@ function toggleVideoCollapse() {
 document.addEventListener('DOMContentLoaded', function() {
 
 (function() {
-  var now = new Date();
-  if (now.getMonth() !== 3 || now.getDate() !== 1) return; // samo 1. travnja
-
-  // Provjeri je li već viđeno za ovaj rater danas
-  var raterEl = document.getElementById('sinput-rater');
-  var raterId = raterEl ? raterEl.value.trim() : '';
-  // Ako rater nije još upisan, čekamo — hookamo na input
-  function tryShow() {
-    var el = document.getElementById('sinput-rater');
-    if (!el) return;
-    var rid = el.value.trim();
-    if (!rid) return;
-    var key = 'april2026_' + rid;
-    if (localStorage.getItem(key)) return; // već viđeno
-    localStorage.setItem(key, '1');
-    showApril();
-  }
-
-  // Ako je rater već upisan pri loadu (npr. autofill)
-  if (raterId) {
-    var key = 'april2026_' + raterId;
-    if (!localStorage.getItem(key)) {
-      localStorage.setItem(key, '1');
-      showApril();
-    }
-    return;
-  }
-
-  // Inače čekaj da upiše rater ID
-  var rEl = document.getElementById('sinput-rater');
-  if (rEl) rEl.addEventListener('change', tryShow);
-
   function showApril() {
     var style = document.createElement('style');
     style.textContent = [
@@ -514,20 +484,28 @@ document.addEventListener('DOMContentLoaded', function() {
       '#april-overlay.fadeout{opacity:0;transition:opacity 0.7s;}'
     ].join('');
     document.head.appendChild(style);
-
     var overlay = document.createElement('div'); overlay.id = 'april-overlay';
     overlay.innerHTML =
       '<div id="april-msg1">STUDIJA JE ZAVRŠENA!<br>HVALA NA SUDJELOVANJU!</div>' +
       '<div id="april-msg2">1. APRIL!</div>' +
       '<div id="april-sub">Nastavite s ispunjavanjem.</div>';
     document.body.appendChild(overlay);
-
     setTimeout(function() { document.getElementById('april-msg1').classList.add('show'); }, 300);
     setTimeout(function() { document.getElementById('april-msg2').classList.add('show'); }, 3500);
     setTimeout(function() { document.getElementById('april-sub').classList.add('show'); }, 6000);
     setTimeout(function() { overlay.classList.add('fadeout'); }, 8500);
     setTimeout(function() { overlay.remove(); }, 9200);
   }
+
+  window.tryAprilJoke = function(rid) {
+    var now = new Date();
+    if (now.getMonth() !== 3 || now.getDate() !== 1) return;
+    if (!rid) return;
+    var key = 'april2026_' + rid;
+    if (localStorage.getItem(key)) return;
+    localStorage.setItem(key, '1');
+    setTimeout(showApril, 400);
+  };
 })();
 // ══════════════════════════════════════════════
 
