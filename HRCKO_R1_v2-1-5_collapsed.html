@@ -82,8 +82,12 @@ body.dark-mode .score-display{background:#1a3a5c!important;color:#90caf9!importa
 #lprogtxt{color:#777;font-size:.88em}
 #vidwarn{background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:.85em;color:#795548;text-align:center;display:none}
 #snextsec{display:none;margin-top:24px;padding:22px 26px;background:#e8f5e9;border-radius:12px;border:2px solid #4caf50;text-align:center}
-/* WRITE TIMER STICKER */
-#sp-trajanje{position:fixed;bottom:18px;right:18px;background:#1a237e;color:#fff;padding:8px 16px;border-radius:20px;font-size:0.95em;font-weight:bold;z-index:9996;box-shadow:0 3px 12px rgba(0,0,0,.4);display:none;transition:opacity .3s}
+/* WRITE TIMER – sticky panel (identično R2) */
+#sticky-panel{position:fixed;bottom:18px;right:18px;background:#1a237e;color:#fff;border-radius:12px;padding:10px 16px;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:9999;font-size:0.88em;min-width:140px;transition:opacity .3s;display:none}
+#sticky-panel:hover{opacity:0.85}
+#sticky-panel .sp-row{display:flex;justify-content:space-between;gap:16px}
+#sticky-panel .sp-label{opacity:0.8}
+#sticky-panel .sp-val{font-weight:bold}
 </style>
 </head>
 <body>
@@ -406,6 +410,8 @@ function sFormReset() {
   document.querySelectorAll('select').forEach(function(el){if(el.id!=='sinput-case')el.selectedIndex=0;});
   document.querySelectorAll('textarea').forEach(function(el){el.value='';});
   // Krug 1: nema panela za reset
+  var spt = document.getElementById('sp-trajanje'); if(spt) spt.textContent = '– min';
+  var spanel = document.getElementById('sticky-panel'); if(spanel) spanel.style.display = 'none';
   sPct=0; sUn=false; sWriteSec=0; sWriteStart=null;
   if(sWriteTmr){clearInterval(sWriteTmr);sWriteTmr=null;}
 }
@@ -431,20 +437,22 @@ function sNext() {
   document.getElementById('study-overlay').style.display='flex';
 }
 
-// Tajmer pisanja – sticker se pojavi i krene na prvi unos teksta
+// Tajmer pisanja – sticky panel se pojavi na prvi unos teksta
 document.addEventListener('input', function() {
   if (!sUn) return;
   if (!sWriteStart) {
     sWriteStart = Date.now();
     sWriteSec = 0;
-    var sticker = document.getElementById('sp-trajanje');
-    if (sticker) { sticker.style.display = 'block'; sticker.textContent = '✏️ 00:00'; }
+    var panel = document.getElementById('sticky-panel');
+    if (panel) panel.style.display = 'block';
+    var sp = document.getElementById('sp-trajanje');
+    if (sp) sp.textContent = '00:00';
     sWriteTmr = setInterval(function() {
       sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
       var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
       var ws = String(sWriteSec%60).padStart(2,'0');
       var el = document.getElementById('sp-trajanje');
-      if (el) el.textContent = '✏️ ' + wm + ':' + ws;
+      if (el) el.textContent = wm + ':' + ws + ' min';
     }, 1000);
   }
 });
@@ -466,7 +474,9 @@ function toggleVideoCollapse() {
         btn.innerHTML = 'Rasklopi video &#9660;';
     }
 }
-<div id="sp-trajanje">✏️ 00:00</div>
 </script>
+<div id="sticky-panel">
+    <div class="sp-row"><span class="sp-label">✍️ Pisanje:</span> <span class="sp-val" id="sp-trajanje">– min</span></div>
+</div>
 </body>
 </html>
