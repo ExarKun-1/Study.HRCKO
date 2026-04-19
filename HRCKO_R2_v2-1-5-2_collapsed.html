@@ -1503,8 +1503,8 @@
     let qualityTimerStart = null;
 
     document.addEventListener('input', function initTimer() {
-        if (!qualityTimerStart) qualityTimerStart = new Date();
-    }, { once: true });
+        if (!qualityTimerStart && sUn) qualityTimerStart = new Date();
+    });
 
     function checkFasting() {
         const h = document.getElementById('post_hrana').value;
@@ -3395,17 +3395,29 @@ function sUnlock() {
   st.textContent = '✅ Video odgledan';
   st.style.background = 'rgba(76,175,80,.35)';
   st.style.color = '#b9f6ca';
-  // Start writing timer
-  sWriteStart = Date.now();
+  // Start writing timer — deferred until first actual input
+  sWriteStart = null;
   sWriteSec = 0;
   if (sWriteTmr) clearInterval(sWriteTmr);
-  sWriteTmr = setInterval(function() {
-    sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
-    var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
-    var ws = String(sWriteSec%60).padStart(2,'0');
-    var el = document.getElementById('sp-trajanje');
-    if (el) el.textContent = wm + ':' + ws + ' min';
-  }, 1000);
+  sWriteTmr = null;
+  // Listen for first real interaction to start timer
+  function startWriteOnInput() {
+    if (sWriteStart) return; // already started
+    sWriteStart = Date.now();
+    sWriteTmr = setInterval(function() {
+      sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
+      var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
+      var ws = String(sWriteSec%60).padStart(2,'0');
+      var el = document.getElementById('sp-trajanje');
+      if (el) el.textContent = wm + ':' + ws + ' min';
+    }, 1000);
+  }
+  document.getElementById('findings-section').addEventListener('input', startWriteOnInput, { once: true });
+  document.getElementById('findings-section').addEventListener('change', startWriteOnInput, { once: true });
+  document.getElementById('peri-section').addEventListener('input', startWriteOnInput, { once: true });
+  document.getElementById('peri-section').addEventListener('change', startWriteOnInput, { once: true });
+  document.getElementById('post-section').addEventListener('input', startWriteOnInput, { once: true });
+  document.getElementById('post-section').addEventListener('change', startWriteOnInput, { once: true });
   var t = document.createElement('div');
   t.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#4caf50;color:#fff;padding:13px 32px;border-radius:10px;font-weight:bold;z-index:9997;box-shadow:0 4px 20px rgba(0,0,0,.35);white-space:nowrap;font-size:1.05em';
   t.textContent = '✅ Možete popuniti obrazac!';
