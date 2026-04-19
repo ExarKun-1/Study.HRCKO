@@ -3,7 +3,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8"/>
-<title>HRČKO STUDIJA</title>
+<title>HRČKO STUDIJA v2.1.5-fix10</title>
 <style>
         /* STILOVI */
         body { font-family: Arial, sans-serif; max-width: 950px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
@@ -131,24 +131,24 @@
         .btn-gen { background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; margin-top: 20px; }
         .btn-gen:hover { background: #218838; }
 
-        /* HORDER BUTTONS & DOWNLOAD */
-        .horder-container { display: flex; gap: 10px; margin-top: 10px; }
+        /* DATA BUTTONS & DOWNLOAD */
+        .data-container { display: flex; gap: 10px; margin-top: 10px; }
         
         /* Brown hamster for viewing */
-        .btn-horder-view { 
+        .btn-data-view { 
             background: #8d6e63; color: white; padding: 10px 20px; border: none; border-radius: 5px; 
             cursor: pointer; font-size: 14px; font-weight: bold; flex: 1; display: flex;
             align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-horder-view:hover { background: #6d4c41; }
+        .btn-data-view:hover { background: #6d4c41; }
 
         /* Black hamster for download */
-        .btn-black-hamster {
+        .btn-csv-download {
             background: #212121; color: white; padding: 10px 20px; border: none; border-radius: 5px; 
             cursor: pointer; font-size: 14px; font-weight: bold; flex: 1; display: flex;
             align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-black-hamster:hover { background: #000000; }
+        .btn-csv-download:hover { background: #000000; }
         
         /* RAW TABLE STYLE */
         .raw-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; font-family: monospace; border: 1px solid #ccc; }
@@ -158,7 +158,7 @@
         .raw-table tr:hover { background-color: #f1f1f1; }
         .val-yes { color: green; font-weight: bold; }
         .val-no { color: #aaa; }
-        #horder-output { margin-top: 20px; border-top: 2px dashed #8d6e63; padding-top: 20px; display: none;}
+        #raw-data-output { margin-top: 20px; border-top: 2px dashed #546e7a; padding-top: 20px; display: none;}
 
         .nested-sib { margin-left: 20px; border-left: 2px dotted #ccc; padding-left: 10px; margin-top: 5px; }
 
@@ -373,7 +373,7 @@
 <div id="study-overlay">
 <div class="smodal">
   <div style="font-size:2.6em;margin-bottom:8px">&#128300;</div>
-  <h2>HR&#268;KO STUDIJA</h2>
+  <h2>HR&#268;KO STUDIJA</h2><span style="font-size:0.65em;color:#90caf9;display:block;margin-top:-2px;">v2.1.5-fix10</span>
   <span class="ssub">Inter-observer video rating study</span>
   <label>Rater ID <span style="color:#e53935">*</span>
     <input type="text" id="sinput-rater" placeholder="npr. R01" maxlength="10" oninput="this.value=this.value.toUpperCase()">
@@ -439,23 +439,22 @@
     <span id="svcase">&#128203; &ndash;</span>
     <span id="svlevel" style="padding:2px 10px;border-radius:12px;background:rgba(255,255,255,.15)">&ndash;</span>
     <span id="svstatus">&#9208; Pokrenite video</span>
-    <span id="svpct" style="display:none">0%</span>
-      <button id="video-toggle-btn" type="button" onclick="toggleVideoCollapse()" style="margin-left: 15px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: bold; transition: background 0.2s;">Skupi video &#9650;</button>
-        </div>
-  <div id="video-collapse-area">
-        <iframe id="svideo" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    <span id="svpct">0%</span>
+  </div>
+  <iframe id="svideo" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
   <div class="sprogbar"><div id="svprogfill"></div></div>
-        </div>
 </div>
 
 <div id="sformlock" style="display:none">
   <div class="lockbox">
     <span class="licon">&#127916;</span>
     <h3>Pogledajte video</h3>
-    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Kad završite, kliknite dugme ispod.</p>
-    <div id="vidwarn" style="background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:.85em;color:#795548;text-align:center;display:none"></div>
-    <br>
-    <button onclick="sForceUnlock()" style="background:#1976d2;border:none;color:#fff;padding:12px 28px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:bold;width:100%;">&#9989; Video odgledan &ndash; Otključaj obrazac</button>
+    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Forma se otklju&#269;ava automatski.</p>
+    <div id="lprogwrap"><div id="lprogfill"></div></div>
+    <small id="lprogtxt">Pokrenite video...</small>
+    <div id="vidwarn"></div>
+    <br><br>
+    <button onclick="sForceUnlock()" style="background:none;border:1px dashed #ccc;color:#bbb;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:.78em">Problem s videom? Otklju&#269;aj ru&#269;no</button>
   </div>
 </div>
 
@@ -466,7 +465,7 @@
     <div class="sp-row" style="margin-top:4px;"><span class="sp-label">✍️ Pisanje:</span> <span class="sp-val" id="sp-trajanje">– min</span></div>
 </div>
 <div class="container">
-<h2>🔬 HRČKO STUDIJA</h2>
+<h2>🔬 HRČKO STUDIJA <small style="font-size:0.4em;color:#999;font-weight:normal;">v2.1.5-fix10</small></h2>
 <!-- 1. PREPROCEDURALNI DIO -->
 <section id="pre-section">
 <h3 class="collapsible-header" onclick="togglePreSection()">1. Preproceduralno <span class="pre-toggle-icon" id="pre-toggle-icon">▲</span></h3><div id="pre-summary"></div>
@@ -794,7 +793,6 @@
 <div class="finding-controls" id="acc-jednjak-body">
 <label class="normal-check"><input id="jednjak_norm" onchange="toggleInput('jednjak_txt', this)" type="checkbox"/> Uredan</label>
 
-
 <!-- Inlet Patch -->
 
 <!-- Divertikul -->
@@ -1079,8 +1077,6 @@
 <div class="finding-controls" id="acc-kardija-body">
 <label class="normal-check"><input id="kardija_norm" onchange="toggleInput('kardija_txt', this)" type="checkbox"/> Uredna sluznica</label>
 
-
-
 <div class="bio-dynamic-wrapper" data-base-loc="kardija" data-type="normal" data-loc-name="Kardija" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
 <div class="patho-section">
@@ -1105,12 +1101,9 @@
 <div class="finding-controls" id="acc-fundus-body">
 <label class="normal-check"><input id="fundus_norm" onchange="toggleInput('fundus_txt', this)" type="checkbox"/> Uredan</label>
 
-
-
 <div class="bio-dynamic-wrapper" data-base-loc="fundus" data-type="normal" data-loc-name="Fundus" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
 <!-- INFLAMMATION PANEL -->
-
 
 <div class="patho-section">
 <label class="patho-toggle-label"><input id="pat_cb_fundus" onchange="document.getElementById('pat_panel_fundus').classList.toggle('hidden',!this.checked);
@@ -1133,8 +1126,6 @@
 <div class="finding-head" id="acc-korpus-head" onclick="toggleAccordion('acc-korpus')">Korpus <span class="acc-arrow">▼</span></div>
 <div class="finding-controls" id="acc-korpus-body">
 <label class="normal-check"><input id="korpus_norm" onchange="toggleInput('korpus_txt', this)" type="checkbox"/> Uredan</label>
-
-
 
 <div class="bio-dynamic-wrapper" data-base-loc="korpus" data-type="normal" data-loc-name="Korpus" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
@@ -1159,9 +1150,11 @@
 <div style="display:flex;gap:15px;flex-wrap:wrap;">
 <label><input name="igv2_korpus_red" type="radio" value="bez crvenih znakova"/> Bez crvenih znakova</label>
 <label><input name="igv2_korpus_red" type="radio" value="sa crvenim znakovima"/> Sa crvenim znakovima</label>
-</div></div></div><div class="sub-opt" style="margin-top:8px; background:#e8f4f8; padding:10px; border-radius:5px; border:1px solid #b3d4fc; width:96%;">
-<label style="font-weight:bold; color:#0277bd;"><input type="checkbox" id="kt_korpus_active" onchange="syncKT()"> 📉 Atrofija sluznice (Kimura-Takemoto)</label>
-<div id="kt_korpus_options" class="hidden" style="margin-top:10px;">
+</div></div></div><div class="bio-dynamic-wrapper" data-base-loc="korpus" data-type="pat" data-loc-name="Korpus PATOLOGIJA" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
+
+<div style="margin-top:10px; background:#e8f4f8; padding:10px; border-radius:5px; border:1px solid #b3d4fc;">
+    <label style="font-weight:bold; color:#0277bd;"><input type="checkbox" id="kt_korpus_active" onchange="syncKT('korpus_main')"> 📉 Atrofija sluznice (Kimura-Takemoto)</label>
+    <div id="kt_korpus_options" class="hidden" style="margin-top:10px;">
 <svg width="100%" viewBox="0 0 680 310" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:8px 0 12px 0;">
 <defs>
   <clipPath id="cl1"><path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z"/></clipPath>
@@ -1170,8 +1163,6 @@
   <clipPath id="cl4"><path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z"/></clipPath>
   <clipPath id="cl5"><path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z"/></clipPath>
 </defs>
-
-<!-- PANEL 1: C-1 -->
 <g transform="translate(8,30)">
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#fff5f5" stroke="#c88888" stroke-width="1.3"/>
   <rect x="-20" y="68" width="80" height="55" fill="#bfdbfe" clip-path="url(#cl1)"/>
@@ -1179,8 +1170,6 @@
   <text x="50" y="-4" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;fill:#555;">C-1</text>
   <text x="22" y="95" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#1d4ed8;font-weight:bold;">antrum</text>
 </g>
-
-<!-- PANEL 2: C-2 -->
 <g transform="translate(121,30)">
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#fff5f5" stroke="#c88888" stroke-width="1.3"/>
   <rect x="-20" y="42" width="80" height="80" fill="#bfdbfe" clip-path="url(#cl2)"/>
@@ -1189,8 +1178,6 @@
   <text x="20" y="75" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#0369a1;font-weight:bold;">donji</text>
   <text x="20" y="85" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#0369a1;font-weight:bold;">korpus</text>
 </g>
-
-<!-- PANEL 3: C-3 -->
 <g transform="translate(234,30)">
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#fff5f5" stroke="#c88888" stroke-width="1.3"/>
   <rect x="-20" y="20" width="80" height="100" fill="#bfdbfe" clip-path="url(#cl3)"/>
@@ -1199,8 +1186,6 @@
   <text x="18" y="55" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#075985;font-weight:bold;">gornji</text>
   <text x="18" y="65" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#075985;font-weight:bold;">korpus</text>
 </g>
-
-<!-- PANEL 4: O-1 -->
 <g transform="translate(347,30)">
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#fff5f5" stroke="#c88888" stroke-width="1.3"/>
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#bfdbfe" clip-path="url(#cl4)"/>
@@ -1210,8 +1195,6 @@
   <text x="18" y="72" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#7e22ce;font-weight:bold;">prelazi</text>
   <text x="18" y="82" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#7e22ce;font-weight:bold;">kardiju</text>
 </g>
-
-<!-- PANEL 5: O-2 -->
 <g transform="translate(460,30)">
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#fff5f5" stroke="#c88888" stroke-width="1.3"/>
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#bfdbfe" clip-path="url(#cl5)"/>
@@ -1221,8 +1204,6 @@
   <text x="16" y="72" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#6b21a8;font-weight:bold;">prednja</text>
   <text x="16" y="82" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#6b21a8;font-weight:bold;">stijenka</text>
 </g>
-
-<!-- PANEL 6: O-3 -->
 <g transform="translate(573,30)">
   <path d="M50,0 C45,-8 28,-12 15,-5 C-5,8 -12,35 -10,65 C-8,88 0,105 12,112 C24,118 38,115 45,108 C52,101 50,90 44,82 C38,74 30,72 28,60 C25,46 35,25 42,12 Z" fill="#bfdbfe" stroke="#c88888" stroke-width="1.3"/>
   <path d="M14,-5 C-5,8 -12,35 -10,65" fill="none" stroke="#86198f" stroke-width="2" stroke-linecap="round" stroke-dasharray="3,2"/>
@@ -1230,12 +1211,8 @@
   <text x="18" y="62" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#86198f;font-weight:bold;">pan-</text>
   <text x="18" y="72" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#86198f;font-weight:bold;">atrofija</text>
 </g>
-
-<!-- Orijentacijska legenda -->
 <text x="340" y="175" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;fill:#888;">&#8592; velika krivina &#160;&#160;&#160;&#160; mala krivina &#8594;</text>
 <text x="340" y="187" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;fill:#888;">fundus &#8593; &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; &#8595; antrum/pilorus</text>
-
-<!-- Legenda rizika -->
 <rect x="40" y="200" width="600" height="100" rx="6" fill="#f9f9f9" stroke="#e0e0e0" stroke-width="0.8"/>
 <text x="340" y="218" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:10px;font-weight:bold;fill:#333;">Kimura-Takemoto klasifikacija &#8212; progresija atrofije</text>
 <line x1="60" y1="235" x2="620" y2="235" stroke="#bbb" stroke-width="1"/>
@@ -1268,26 +1245,24 @@
 <text x="490" y="285" style="font-family:Arial,sans-serif;font-size:8px;fill:#555;">&#8212; = atrofična granica (F-linija)</text>
 </svg>
 <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
-<label><input type="radio" name="kt_klasifikacija" value="C-1 (samo antrum)" onchange="syncKT()"> <strong>C-1</strong> <small style="color:#555;">antrum</small></label>
-<label><input type="radio" name="kt_klasifikacija" value="C-2 (do donje trećine korpusa)" onchange="syncKT()"> <strong>C-2</strong> <small style="color:#555;">donja trećina korpusa</small></label>
-<label><input type="radio" name="kt_klasifikacija" value="C-3 (do srednje/gornje trećine korpusa)" onchange="syncKT()"> <strong>C-3</strong> <small style="color:#555;">gornja trećina korpusa</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="C-1 (samo antrum)" onchange="syncKT('radio')"> <strong>C-1</strong> <small style="color:#555;">antrum</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="C-2 (do donje trećine korpusa)" onchange="syncKT('radio')"> <strong>C-2</strong> <small style="color:#555;">donja trećina korpusa</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="C-3 (do srednje/gornje trećine korpusa)" onchange="syncKT('radio')"> <strong>C-3</strong> <small style="color:#555;">gornja trećina korpusa</small></label>
 </div>
 <div style="display:flex; gap:10px; flex-wrap:wrap;">
-<label><input type="radio" name="kt_klasifikacija" value="O-1 (atrofija blago prelazi prednju stijenku korpusa)" onchange="syncKT()"> <strong>O-1</strong> <small style="color:#c62828;">prelazi kardiju</small></label>
-<label><input type="radio" name="kt_klasifikacija" value="O-2 (atrofija obuhvaća veći dio prednje stijenke)" onchange="syncKT()"> <strong>O-2</strong> <small style="color:#c62828;">pola prednje stijenke</small></label>
-<label><input type="radio" name="kt_klasifikacija" value="O-3 (potpuna atrofija korpusa)" onchange="syncKT()"> <strong>O-3</strong> <small style="color:#c62828;">cijeli korpus + fundus</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="O-1 (atrofija blago prelazi prednju stijenku korpusa)" onchange="syncKT('radio')"> <strong>O-1</strong> <small style="color:#c62828;">prelazi kardiju</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="O-2 (atrofija obuhvaća veći dio prednje stijenke)" onchange="syncKT('radio')"> <strong>O-2</strong> <small style="color:#c62828;">pola prednje stijenke</small></label>
+<label><input type="radio" name="kt_klasifikacija" value="O-3 (potpuna atrofija korpusa)" onchange="syncKT('radio')"> <strong>O-3</strong> <small style="color:#c62828;">cijeli korpus + fundus</small></label>
 </div>
 <div id="kt_fundus_warning" class="hidden" style="margin-top:6px; font-size:0.85em; color:#d32f2f; font-weight:bold;">* O-3: atrofija automatski obuhvaća i fundus.</div>
+    </div></div></div></div><textarea class="pathology-input" id="korpus_txt" oninput="autoUncheckNormal('korpus_norm')" rows="1"></textarea>
 </div>
 </div>
-<div class="bio-dynamic-wrapper" data-base-loc="korpus" data-type="pat" data-loc-name="Korpus PATOLOGIJA" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
-</div></div></div><textarea class="pathology-input" id="korpus_txt" oninput="autoUncheckNormal('korpus_norm')" rows="1"></textarea><!-- ANTRUM (WITH INFLAM) -->
+<!-- ANTRUM (WITH INFLAM) -->
 <div class="finding-row">
 <div class="finding-head" id="acc-antrum-head" onclick="toggleAccordion('acc-antrum')">Antrum <span class="acc-arrow">▼</span></div>
 <div class="finding-controls" id="acc-antrum-body">
 <label class="normal-check"><input id="antrum_norm" onchange="toggleInput('antrum_txt', this)" type="checkbox"/> Uredan</label>
-
-
 
 <div class="bio-dynamic-wrapper" data-base-loc="antrum" data-type="normal" data-loc-name="Antrum" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
@@ -1329,13 +1304,11 @@
 <div class="finding-controls" id="acc-bulbus-body">
 <label class="normal-check"><input id="duod_norm" onchange="toggleInput('duod_txt', this)" type="checkbox"/> Uredan</label>
 
-
-
 <div class="bio-dynamic-wrapper" data-base-loc="duod" data-type="normal" data-loc-name="Bulbus" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
 <div class="patho-section">
 <label class="patho-toggle-label"><input id="pat_cb_bulbus" onchange="document.getElementById('pat_panel_bulbus').classList.toggle('hidden',!this.checked);
-            if(this.checked) autoUncheckNormal('bulbus_norm');" type="checkbox"/> 🔴 PATOLOGIJA</label>
+            if(this.checked) autoUncheckNormal('duod_norm');" type="checkbox"/> 🔴 PATOLOGIJA</label>
 <div class="hidden patho-panel" id="pat_panel_bulbus"><div class="inflam-panel">
   <label style="font-weight:bold;color:#d84315;">
     <input id="bulbus_upala" type="checkbox" onchange="autoUncheckNormal('duod_norm'); toggleInflam('bulbus')"> Znakovi upale (hiperemija)
@@ -1353,7 +1326,6 @@
 <div class="finding-head" id="acc-silazni-head" onclick="toggleAccordion('acc-silazni')">DVANESNIK – SILAZNI DIO (D2) <span class="acc-arrow">▼</span></div>
 <div class="finding-controls" id="acc-silazni-body">
 <label class="normal-check"><input id="silazni_norm" onchange="toggleInput('silazni_txt', this)" type="checkbox"/> Uredan</label>
-
 
 <div class="patho-section">
 <label class="patho-toggle-label"><input id="pat_cb_silazni" onchange="document.getElementById('pat_panel_silazni').classList.toggle('hidden',!this.checked);
@@ -1442,7 +1414,7 @@
 <label><input id="komp_ostalo" name="komplikacije" onchange="document.getElementById('komp_opis').style.display='block'" type="radio" value="Ostalo"/> Ostalo</label>
 <input id="komp_opis" placeholder="Opišite komplikaciju..." style="display:none;width:100%;margin-top:6px;" type="text"/>
 </div>
-<h4 style="color:#0056b3;">Fotodokumentacija (ESGE STAR 2025 – min. 10 fotografija)</h4>
+<h4 id="foto-section" style="color:#0056b3;">Fotodokumentacija (ESGE STAR 2025 – min. 10 fotografija)</h4>
 <div style="background:#e8f4f8;padding:12px;border-radius:5px;border:1px solid #b3d4fc;margin-bottom:15px;">
 <p style="font-size:0.85em;color:#444;margin:0 0 10px 0;">
     Prema <b>ESGE STAR projektu (Esposito et al., 2025)</b> i <b>ESGE Performance Measures</b> preporučuje se min. 10 fotografija anatomskih orijentira.
@@ -1492,12 +1464,12 @@
 </div>
 </section>
 <button class="btn-gen" onclick="generateFullReport()">GENERIRAJ PUNI NALAZ</button>
-<div class="horder-container">
-<button class="btn-horder-view" onclick="hoardData()">🐹 Prikaži Raw Podatke</button>
-<button class="btn-black-hamster" onclick="downloadCSV()">🐹🖤 Preuzmi .CSV</button>
+<div class="data-container">
+<button class="btn-data-view" onclick="hoardData()">📊 Prikaži Raw Podatke</button>
+<button class="btn-csv-download" onclick="downloadCSV()">📥 Preuzmi .CSV</button>
 </div>
 <div id="report"></div>
-<div id="horder-output"></div>
+<div id="raw-data-output"></div>
 </div>
 
 <!-- REPORT MODAL -->
@@ -1527,24 +1499,9 @@
     // GLOBALNE QA FUNKCIJE ---
     let qualityTimerStart = null;
 
-    // Tajmer pisanja — kreće tek kad korisnik klikne prvi checkbox/radio nakon otključavanja
-    document.addEventListener('change', function(e) {
+    document.addEventListener('input', function initTimer() {
         if (!qualityTimerStart) qualityTimerStart = new Date();
-        if (!sUn) return;  // ignoriraj dok forma nije otključana
-        var tag = e.target.tagName;
-        var type = e.target.type;
-        if (!((tag === 'INPUT' && (type === 'checkbox' || type === 'radio')) || tag === 'SELECT')) return;
-        if (!sWriteStart) {
-            sWriteStart = Date.now();
-            sWriteTmr = setInterval(function() {
-                sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
-                var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
-                var ws = String(sWriteSec%60).padStart(2,'0');
-                var el = document.getElementById('sp-trajanje');
-                if (el) el.textContent = wm + ':' + ws + ' min';
-            }, 1000);
-        }
-    });
+    }, { once: true });
 
     function checkFasting() {
         const h = document.getElementById('post_hrana').value;
@@ -1654,17 +1611,19 @@
     }
     
     function updateAtrophyTexts() {
-        let k_cb     = document.getElementById('kt_korpus_active');
-        let ktActive = k_cb && k_cb.checked;
-        let radioChecked = document.querySelector('input[name="kt_klasifikacija"]:checked');
-        let ktVal    = radioChecked ? radioChecked.value : "";
+        let kt_antrum_c1     = document.getElementById('kt_antrum_c1');
+        let kt_korpus_active = document.getElementById('kt_korpus_active');
+        let fundus_atrofija  = document.getElementById('fundus_atrofija');
+        let radioChecked     = document.querySelector('input[name="kt_klasifikacija"]:checked');
+        let ktVal            = radioChecked ? radioChecked.value : "";
 
-        let isC1 = ktVal.includes('C-1');
-        let isO3 = ktVal.includes('O-3');
+        let isC1     = ktVal.includes('C-1');
+        let isO3     = ktVal.includes('O-3');
+        let ktActive = kt_korpus_active && kt_korpus_active.checked;
 
-        let antrumAtro = ktActive;
+        let antrumAtro = (kt_antrum_c1 && kt_antrum_c1.checked) || ktActive;
         let korpusAtro = ktActive && !isC1;
-        let fundusAtro = ktActive && isO3;
+        let fundusAtro = (fundus_atrofija && fundus_atrofija.checked) || isO3;
 
         function applyAtro(segId, isAtro) {
             let norm = document.getElementById(segId + '_norm');
@@ -1675,11 +1634,17 @@
                 norm.disabled = true;
                 if (window.toggleInput) toggleInput(segId + '_txt', norm);
                 let val = txt.value.trim();
-                if (val === '' || /uredan|uredna|urednog|urednih|atrofi/i.test(val)) txt.value = '';
+                if (val === '' || val.includes('uredna') || val.includes('urednog') ||
+                    val.includes('urednih') || val.includes('uredan') ||
+                    val.includes('atrofičn') || val.includes('Atrofičn')) {
+                    txt.value = '';
+                }
             } else {
                 norm.disabled = false;
                 let val = txt.value.trim();
-                if (/atrofi/i.test(val)) txt.value = '';
+                if (val.includes('atrofičn') || val.includes('Atrofičn')) {
+                    txt.value = '';
+                }
             }
         }
 
@@ -1694,15 +1659,29 @@
         }
     }
 
-    function syncKT() {
-        let k_cb   = document.getElementById('kt_korpus_active');
+    function syncKT(source) {
+        let a_cb = document.getElementById('kt_antrum_c1');
+        let k_cb = document.getElementById('kt_korpus_active');
         let k_opts = document.getElementById('kt_korpus_options');
-        if (!k_cb) return;
-        if (k_cb.checked) {
-            k_opts.classList.remove('hidden');
-        } else {
-            k_opts.classList.add('hidden');
-            document.getElementsByName('kt_klasifikacija').forEach(r => r.checked = false);
+        let radios = document.getElementsByName('kt_klasifikacija');
+
+        if (source === 'antrum') {
+            if (a_cb.checked) {
+                k_cb.checked = true; k_opts.classList.remove('hidden');
+                radios.forEach(r => { if (r.value.includes('C-1')) r.checked = true; });
+            } else {
+                radios.forEach(r => { if (r.value.includes('C-1') && r.checked) { r.checked = false; k_cb.checked = false; k_opts.classList.add('hidden'); } });
+            }
+        } else if (source === 'korpus_main') {
+            if (k_cb.checked) { k_opts.classList.remove('hidden'); } 
+            else { k_opts.classList.add('hidden'); radios.forEach(r => r.checked = false); a_cb.checked = false; }
+        } else if (source === 'radio') {
+            let checkedRadio = document.querySelector('input[name="kt_klasifikacija"]:checked');
+            if (checkedRadio) {
+                k_cb.checked = true; k_opts.classList.remove('hidden');
+                if (checkedRadio.value.includes('C-1')) { a_cb.checked = true; } 
+                else { a_cb.checked = false; }
+            }
         }
         updateAtrophyTexts();
     }
@@ -1794,11 +1773,10 @@
             const el = document.getElementById(inputId);
             if (!el) return;
             if (cb.checked) {
-                // Uredan označen → briši tekst i blokiraj polje
-                el.value           = '';
-                el.style.opacity       = '0.35';
-                el.style.pointerEvents = 'none';
-                el.placeholder         = '(Uredan — odznačite za slobodni opis)';
+                // Uredan označen → textarea ostaje otvorena za dodatni komentar
+                el.style.opacity       = '0.7';
+                el.style.pointerEvents = 'auto';
+                el.placeholder         = '(Uredan — po potrebi dodajte komentar, npr. glikoakantoza...)';
             } else {
                 // Uredan odznačen → aktiviraj polje
                 el.style.opacity       = '1';
@@ -1900,9 +1878,9 @@
         document.getElementById('res_m').textContent = valM >= 0 ? valM : "Err";
     }
 
-    // --- HORDER FUNCTION (VISUAL) ---
+    // --- RAW DATA FUNCTION (VISUAL) ---
     function hoardData() {
-        let tableHTML = '<h3 style="color:#8d6e63;">🐹 Horder Raw Data (Preview)</h3><table class="raw-table"><thead><tr><th>ID Elementa</th><th>Tip</th><th>Vrijednost</th></tr></thead><tbody>';
+        let tableHTML = '<h3 style="color:#8d6e63;">📊 Raw Data (Preview)</h3><table class="raw-table"><thead><tr><th>ID Elementa</th><th>Tip</th><th>Vrijednost</th></tr></thead><tbody>';
         
         // QA timer
         let _hoardTime = "Nije izmjereno";
@@ -1933,7 +1911,7 @@
         });
         
         tableHTML += '</tbody></table>';
-        const output = document.getElementById('horder-output');
+        const output = document.getElementById('raw-data-output');
         output.innerHTML = tableHTML;
         output.style.display = 'block';
     }
@@ -2333,15 +2311,7 @@
 
     // --- GENERATOR ---
     function segUpalaInline(segId, patName, locStr) {
-        let _r2    = document.querySelector('input[name="kt_klasifikacija"]:checked');
-        let _kv    = _r2 ? _r2.value : "";
-        let _kact  = document.getElementById('kt_korpus_active');
-        let _kon   = _kact && _kact.checked;
-        let _isC1  = _kv.includes('C-1');
-        let _isO3  = _kv.includes('O-3');
-        if (segId === 'antrum' && _kon)            return '';
-        if (segId === 'korpus' && _kon && !_isC1)  return '';
-        if (segId === 'fundus' && _kon && _isO3)   return '';
+        // Atrofija i upala mogu koegzistirati — upala se generira neovisno
         var el = document.getElementById(segId + '_upala');
         if (!el || !el.checked) return '';
         var r    = document.querySelector('input[name="' + patName + '"]:checked');
@@ -2493,7 +2463,10 @@
         function getSegmentText(cbId, textId, normalText, segmentName, upalaId) {
             const el = document.getElementById(textId);
             const manual = el ? el.value.trim() : '';
-            if (document.getElementById(cbId) && document.getElementById(cbId).checked) return normalText;
+            if (document.getElementById(cbId) && document.getElementById(cbId).checked) {
+                if (manual) return normalText + ' ' + (manual.endsWith('.') ? manual : manual + '.');
+                return normalText;
+            }
             if (!manual) {
                 // Upala aktivna — vraćamo '' jer upala pokriva mukozu (merged u segment tekst)
                 if (upalaId && document.getElementById(upalaId) && document.getElementById(upalaId).checked) return '';
@@ -2654,7 +2627,6 @@
             jednjakFinal += esgeSentence;
         }
 
-
         const parisJednjakTxt = getAllParisReports('jednjak', 'jednjaku');
         if (parisJednjakTxt) jednjakFinal = (jednjakFinal ? jednjakFinal + ' ' : '') + parisJednjakTxt;
         const lacerJednjakTxt = getLacerReport('jednjak', 'jednjaku');
@@ -2755,7 +2727,9 @@
             let _ktOn         = _ktActive && _ktActive.checked;
             let _isC1         = _ktVal.includes('C-1');
             let _isO3         = _ktVal.includes('O-3');
-            let _fundusAtro = _isO3 && _ktOn;
+            let _fundusAtroEl = document.getElementById('fundus_atrofija');
+            let _fundusAtroCb = _fundusAtroEl && _fundusAtroEl.checked;
+            let _fundusAtro   = _fundusAtroCb || _isO3;
 
             let _segUnderAtro = false;
             if (normId === 'antrum_norm' && _ktOn)           _segUnderAtro = true;
@@ -2763,10 +2737,23 @@
             if (normId === 'fundus_norm' && _fundusAtro)     _segUnderAtro = true;
 
             const normEl = document.getElementById(normId);
-            if (!_segUnderAtro && normEl && normEl.checked) return defaultTxt;
+            if (!_segUnderAtro && normEl && normEl.checked) {
+                if (manual) return defaultTxt + ' ' + (manual.endsWith('.') ? manual : manual + '.');
+                return defaultTxt;
+            }
 
             const txEl   = document.getElementById(txtId);
             const manual = txEl ? txEl.value.trim() : '';
+
+            // Kad je segment pod atrofijom: buildSeg vraća '' jer KT tekst
+            // pokriva atrofiju globalno. Upala se dodaje ZASEBNO kroz segUpalaInline.
+            if (_segUnderAtro) {
+                if (manual) return manual.endsWith('.') ? manual : manual + '.';
+                if (normId === 'fundus_norm' && _fundusAtroCb && !_isO3) {
+                    return 'Sluznica fundusa je atrofična.';
+                }
+                return '';
+            }
 
             if (upalaId) {
                 const uEl = document.getElementById(upalaId);
@@ -2780,10 +2767,9 @@
                     ? segName + ' je ' + manual + (manual.endsWith('.') ? '' : '.')
                     : manual + (manual.endsWith('.') ? '' : '.');
             }
-            if (normId === 'fundus_norm' && _fundusAtro) {
+            if (normId === 'fundus_norm' && _fundusAtroCb && !_isO3) {
                 return 'Sluznica fundusa je atrofična.';
             }
-            if (_segUnderAtro) return '';
             return defaultTxt;
         }
 
@@ -2803,7 +2789,6 @@
         const _upala_antrum = segUpalaInline('antrum', 'antrum_upala_pat', 'antrumu');
         if (_upala_antrum) antrumTxt = (antrumTxt ? antrumTxt + ' ' : '') + _upala_antrum;
         [getAllParisReports('antrum','antrumu'),    getAllForrestReports('antrum','antrumu'),    getLacerReport('antrum','antrumu')].forEach(t=>{ if(t) antrumTxt=(antrumTxt?antrumTxt+' ':'')+t; });
-
 
         var _igv1 = document.getElementById('igv1_fundus');
         if (_igv1 && _igv1.checked) {
@@ -2971,7 +2956,9 @@
         if (d_lac) dijagnoze.push('Sy. Mallory-Weiss');
 
         let d_ktKorpus = document.getElementById('kt_korpus_active') && document.getElementById('kt_korpus_active').checked;
-        if (d_ktKorpus) {
+        let d_ktAntrum = document.getElementById('kt_antrum_c1') && document.getElementById('kt_antrum_c1').checked;
+        let d_fundusAtro = document.getElementById('fundus_atrofija') && document.getElementById('fundus_atrofija').checked;
+        if (d_ktKorpus || d_ktAntrum || d_fundusAtro) {
             let ktSel = document.querySelector('input[name="kt_klasifikacija"]:checked');
             if (ktSel) dijagnoze.push('Gastritis atrophica (Kimura-Takemoto ' + ktSel.value.split(' ')[0] + ')');
             else dijagnoze.push('Gastritis atrophica');
@@ -3188,7 +3175,6 @@ ${postReport}
         Object.entries(txMap).forEach(function(e){var cb=document.getElementById(e[0]);if(cb)toggleInput(e[1],cb);});
     });
 
-
     function toggle2ndDegree() {
         var e = document.getElementById('fam_2nd_opts');
         var a = document.getElementById('fam_2nd_active');
@@ -3202,9 +3188,7 @@ ${postReport}
             var eggimScore = egEl ? (parseInt(egEl.textContent)||0) : 0;
             var ktRadio = document.querySelector('input[name="kt_klasifikacija"]:checked');
             var ktVal = ktRadio ? ktRadio.value : "";
-            var _ktCb = document.getElementById('kt_korpus_active');
-            var _kon  = _ktCb && _ktCb.checked;
-            var ktHigh = _kon && (ktVal.indexOf('C-3')>=0||ktVal.indexOf('O-1')>=0||ktVal.indexOf('O-2')>=0||ktVal.indexOf('O-3')>=0);
+            var ktHigh = (ktVal.indexOf('C-3')>=0||ktVal.indexOf('O-1')>=0||ktVal.indexOf('O-2')>=0||ktVal.indexOf('O-3')>=0);
             var fam_el = document.getElementById('fam_ca_zeluca');
             var fam_ca = fam_el && fam_el.checked;
             var reasons = [];
@@ -3245,28 +3229,28 @@ var SC = {
   "EGD002": "1dHqvUaZxmPs8bTmyY6xEHFU5KXlk8i8f",
   "EGD003": "1k9lvEX7rHWI0MlTk0E-UTk5tTqvO3LOo",
   "EGD004": "1xOtJq4It9SJem6Ke2gBv8yYV4C5rj7HU",
-  "EGD005": "1v9ShOg36leT70_TNlHg70gqpgkXEp3as",
-  "EGD006": "1Mv_DmoA-9jazRQ0vGlobpQplVQM9ziIU",
-  "EGD007": "14D9FBrnQiMGSjhCD1IDKvJZFzj91hncR",
+  "EGD005": "1DfWwFu_DtG2XJpLtCZ6PC85dRL5Z_R40",
+  "EGD006": "1jC2QwKyzjqgSQnEdExLGJIPR8b0xmrRh",
+  "EGD007": "1FAeuS-AZ6ZSXJnbK5_hklVJrhyE9zsVn",
   "EGD008": "1TinIM_916Hm2s-PshyEqGoc484l4J8IU",
   "EGD009": "1g0TUOqpalJVK52sAEKlmITDE3rcsoVff",
   "EGD010": "1Lpj0Lv3ZxKCZinbWO1bZiP5MEnLCRVif",
   "EGD011": "1rRL-CN8oGrvdH0ZzR6HKOYcFzecmniiy",
-  "EGD012": "1sZbjlhAc9iXJbewte9ucmQK519dCfHTb",
+  "EGD012": "1o87w_HDPMHLjykBCdg3oND_1awv9y5q8",
   "EGD013": "1oY2CFsp_Sr0kSvXzg-nBvA7t5p-581BC",
   "EGD014": "1cugmaO9yUQZODOH1gkPwFGly5h697ap1",
-  "EGD015": "19vU5xPQegm6MIb-HZQefiBX_kXwhL5El",
-  "EGD016": "1wGWgu_z70RPT8ROIujzT7JCHMQVVUk-p",
-  "EGD017": "1vTGFtjqRZOHFbfYHMM_TGNmV1yuc4xJv",
+  "EGD015": "1dZ9gSOEVkY4QinBOfvThpi7drklyNLa-",
+  "EGD016": "1webQMX6RtAUAphxQQ1VKUPP7ApB_FtgK",
+  "EGD017": "1_6w0dyqQ9ikfI444GCQ_czeu2xhe7qL5",
   "EGD018": "11_BjhxgB-c7NGW7VVKvpc4Q-WIodGRYD",
   "EGD019": "1Sncb2VPvrNv9Wl_znjXfYqzB5CH2Hv20",
-  "EGD020": "1RuW_kHaMvfCev6lvvPHozkxbacBh3a2x",
+  "EGD020": "1RDNzNr49Wr5lnSMnFvt9hxpeFSJMk0ZW",
   "EGD021": "13BITh6tAf8_UN0Z4ok7leyxXWH-mwTqT",
   "EGD022": "1AMJj61siXSFxxkB8iW7CYj6PI7Bwx4yq",
   "EGD023": "1RUAlym7-5XYl0IWZeP8onNzBISFkU2Gx",
   "EGD024": "1LOYn2Rbkq6Gf4Pnvpae-HIDA7fTg6Akc",
   "EGD025": "1kPNYZb8s-5N4vMAbTR0JUTw39X8G5j0C",
-  "EGD026": "1kyPIpTe_W_g1Pk2smsem6E8JXMOPYWOl",
+  "EGD026": "1i-nLhjli7FLKzH51telOSnUOwLSpkjUr",
   "EGD027": "1XgIM7d7A_UVD-Z7lsy2JPWsoclqsCuEm",
   "EGD028": "1ACfaNhIz-TGYxpmDCepHF25ag9ZgnswX",
   "EGD029": "1oePikT6vtbaTz5tyHYq1R_S5L5Bq-sqR",
@@ -3275,7 +3259,6 @@ var SC = {
 var SAU = 'https://script.google.com/macros/s/AKfycbxzFvzPkRuUZ7x9I4zU5Hm5MolpQfjbk7yVomW8dcvpfds_fTk7m9cob8mBspWuq9B3jg/exec';
 var MW  = 120; // sekundi
 var sR='', sC='', sPct=0, sUn=false, sTmr=null, sExp='', sWriteStart=null, sWriteSec=0, sWriteTmr=null;
-
 
 function togglePreSection() {
   var body    = document.getElementById('pre-body');
@@ -3295,18 +3278,18 @@ function togglePreSection() {
 function updatePreSummary() {
   var ime    = (document.getElementById('ime')?.value || '').trim() || '—';
   var datum  = document.getElementById('datum')?.value || '';
-  var asaEl  = document.getElementById('preasa');
+  var asaEl  = document.getElementById('pre_asa');
   var asaVal = asaEl ? asaEl.value : '';
   var asaTxt = (asaVal && asaVal !== '-- Odaberi --')
     ? (asaVal.match(/ASA (I{1,3}V?|V)/)?.[0] || asaVal) : '—';
-  var consent = document.getElementById('preconsent')?.checked
+  var consent = document.getElementById('pre_consent')?.checked
     ? '✓ Pristanak' : '✗ Bez pristanka';
   var indCount = document.querySelectorAll('.ind-cb:checked').length;
   var indTxt   = indCount > 0 ? (indCount + ' ind.') : '';
-  var hpTxt    = document.getElementById('hpstatnaivni')?.checked ? 'HP: Naivni'
-    : document.getElementById('hpstatlijeceni')?.checked ? 'HP: Liječeni' : '';
-  var hrana  = document.getElementById('posthrana')?.value || '';
-  var teku   = document.getElementById('postteku')?.value || '';
+  var hpTxt    = document.getElementById('hp_stat_naivni')?.checked ? 'HP: Naivni'
+    : document.getElementById('hp_stat_lijeceni')?.checked ? 'HP: Liječeni' : '';
+  var hrana  = document.getElementById('post_hrana')?.value || '';
+  var teku   = document.getElementById('post_teku')?.value || '';
   var fastTxt = (hrana || teku)
     ? ('glad: ' + (hrana||'?') + 'h / tek: ' + (teku||'?') + 'h') : '';
   var parts = [ime, datum, asaTxt, consent, indTxt, hpTxt, fastTxt].filter(Boolean);
@@ -3332,6 +3315,9 @@ function sStart() {
   document.getElementById('svstatus').style.background = 'rgba(255,255,255,.15)';
   document.getElementById('svstatus').style.color = '';
   document.getElementById('svpct').textContent = '0%';
+  document.getElementById('svprogfill').style.width = '0%';
+  document.getElementById('lprogfill').style.width  = '0%';
+  document.getElementById('lprogtxt').textContent = 'Pokrenite video...';
   document.getElementById('snextsec').style.display = 'none';
   var raw  = SC[sC] || '';
   var parts = raw.split('|');
@@ -3375,41 +3361,53 @@ function sStart() {
     if (sum) { updatePreSummary(); sum.classList.add('visible'); }
   })();
   document.getElementById('sformlock').style.display = 'flex';
-  document.getElementById('svstatus').textContent = '▶ Pogledajte video';
-  document.getElementById('video-collapse-area').style.display = 'block';
-  var toggleBtn = document.getElementById('video-toggle-btn');
-  if (toggleBtn) toggleBtn.innerHTML = 'Skupi video &#9650;';
+  sTicker();
 }
 
-
+function sTicker() {
+  var el = 0;
+  document.getElementById('svstatus').textContent = '⏱ Gledanje...';
+  sTmr = setInterval(function() {
+    if (document.visibilityState !== 'visible') return;
+    el++;
+    var p  = Math.min((el / MW) * 100, 100);
+    sPct   = p;
+    var r  = Math.max(MW - el, 0);
+    var mm = String(Math.floor(r / 60)).padStart(2,'0');
+    var ss = String(r % 60).padStart(2,'0');
+    document.getElementById('svprogfill').style.width = p.toFixed(1) + '%';
+    document.getElementById('lprogfill').style.width  = p.toFixed(1) + '%';
+    document.getElementById('svpct').textContent = Math.floor(p) + '%';
+    document.getElementById('lprogtxt').textContent  = 'Preostalo: ' + mm + ':' + ss;
+    var spTr = document.getElementById('sp-trajanje');
+    if (spTr && !sUn) spTr.textContent = '⏳ ' + mm + ':' + ss;
+    if (el >= MW && !sUn) { clearInterval(sTmr); sUnlock(); }
+  }, 1000);
+}
 
 function sUnlock() {
   sUn = true;
   document.getElementById('sformlock').style.display = 'none';
-
-    // Automatski skupi video kad se otkljuca forma
-
   var st = document.getElementById('svstatus');
   st.textContent = '✅ Video odgledan';
   st.style.background = 'rgba(76,175,80,.35)';
   st.style.color = '#b9f6ca';
-  // Reset tajmera pisanja — startati će tek kad korisnik klikne prvi checkbox/radio
-  sWriteStart = null;
+  // Start writing timer
+  sWriteStart = Date.now();
   sWriteSec = 0;
-  if (sWriteTmr) { clearInterval(sWriteTmr); sWriteTmr = null; }
+  if (sWriteTmr) clearInterval(sWriteTmr);
+  sWriteTmr = setInterval(function() {
+    sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
+    var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
+    var ws = String(sWriteSec%60).padStart(2,'0');
+    var el = document.getElementById('sp-trajanje');
+    if (el) el.textContent = wm + ':' + ws + ' min';
+  }, 1000);
   var t = document.createElement('div');
   t.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#4caf50;color:#fff;padding:13px 32px;border-radius:10px;font-weight:bold;z-index:9997;box-shadow:0 4px 20px rgba(0,0,0,.35);white-space:nowrap;font-size:1.05em';
-  if (!document.getElementById('egg-anim')) {
-    var s = document.createElement('style');
-    s.id = 'egg-anim';
-    s.textContent = '@keyframes eggWobble{0%{transform:rotate(-15deg)}25%{transform:rotate(15deg)}50%{transform:rotate(-10deg)}75%{transform:rotate(10deg)}100%{transform:rotate(0deg)}}.egg-wobble{display:inline-block;animation:eggWobble 0.6s ease-in-out;}';
-    document.head.appendChild(s);
-  }
-  t.innerHTML = '<span id="egg-spin-el" class="egg-wobble">🥚</span> Na dobrom ste putu. Nastavite!';
-  setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e){ e.textContent='🐣'; e.className=''; }}, 800);
-  setTimeout(function(){ var e=document.getElementById('egg-spin-el'); if(e){ e.textContent='🐥'; }}, 1600);
+  t.textContent = '✅ Možete popuniti obrazac!';
   document.body.appendChild(t);
-  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3800);
+  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3200);
   document.getElementById('snextsec').style.display = 'block';
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -3417,6 +3415,8 @@ function sUnlock() {
 function sForceUnlock() {
   sPct = 100;
   if (sTmr) clearInterval(sTmr);
+  document.getElementById('svprogfill').style.width = '100%';
+  document.getElementById('lprogfill').style.width  = '100%';
   sUnlock();
 }
 
@@ -3433,7 +3433,7 @@ function sDownloadCSV() {
   d.STUDY_CASE_ID     = sC;
   d.STUDY_RATER_EXP   = sExp;
   d.STUDY_RATER_LEVEL = sExp === 'specialist' ? 'Specijalist (>2000 EGD)' : 'Trainee (≤2000 EGD)';
-  d.STUDY_VIDEO_PCT   = 'N/A';
+  d.STUDY_VIDEO_PCT   = sPct.toFixed(1) + '%';
   d.STUDY_WATCHED     = sUn ? 'DA' : 'NE';
   d.STUDY_TIMESTAMP   = new Date().toISOString();
   var wm2 = String(Math.floor(sWriteSec/60)).padStart(2,'0');
@@ -3473,6 +3473,7 @@ function sDownloadCSV() {
 }
 
 function sFormReset() {
+  document.title = "RESET FIRED - fix10 " + new Date().toLocaleTimeString();
   // Reset sve checkboxeve i radio gumbe
   document.querySelectorAll('input[type=checkbox]').forEach(function(el){ el.checked = false; });
   document.querySelectorAll('input[type=radio]').forEach(function(el){ el.checked = false; });
@@ -3490,13 +3491,72 @@ function sFormReset() {
   document.querySelectorAll('.hidden, .sub-group, .surv-panel, .bio-vials').forEach(function(el){
     el.classList.add('hidden'); el.style.display = '';
   });
+
+  // ====== RE-ENABLE NORM CHECKBOXES (atrofija ih disabla) ======
+  ['jednjak_norm','kardija_norm','fundus_norm','korpus_norm',
+   'antrum_norm','pilorus_norm','duod_norm','silazni_norm'].forEach(function(id){
+    var cb = document.getElementById(id);
+    if (cb) { cb.disabled = false; cb.checked = false; }
+  });
+
+  // ====== RESET KT ATROFIJA STATE ======
+  var ktOpts = document.getElementById('kt_korpus_options');
+  if (ktOpts) ktOpts.classList.add('hidden');
+  var ktWarn = document.getElementById('kt_fundus_warning');
+  if (ktWarn) ktWarn.classList.add('hidden');
+
+  // ====== RESET TEXTAREA OPACITY / POINTER-EVENTS ======
+  ['jednjak_txt','kardija_txt','fundus_txt','korpus_txt',
+   'antrum_txt','pilorus_txt','duod_txt','silazni_txt'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) {
+      el.style.opacity = '1';
+      el.style.pointerEvents = 'auto';
+      el.placeholder = 'Slobodan opis patologije...';
+      el.value = '';
+    }
+  });
+
+  // ====== RESET PATHO PANELS ======
+  document.querySelectorAll('.patho-panel').forEach(function(el){ el.classList.add('hidden'); });
+  // Reset Paris/Forrest/Lacer panels
+  document.querySelectorAll('.paris-panel, .forrest-panel, .lacer-panel').forEach(function(el){
+    el.classList.add('hidden'); el.classList.remove('visible');
+  });
+  // Reset inflammation panels
+  document.querySelectorAll('.inflam-opts').forEach(function(el){ el.classList.add('hidden'); });
+
   // GRACE score reset na default 3
-  ['gracee','graceg','graced'].forEach(function(id){
+  ['grace_e','grace_g','grace_d'].forEach(function(id){
     var el = document.getElementById(id);
     if (el) { el.selectedIndex = 3; }
   });
   var gs = document.getElementById('grace-score');
   if (gs) gs.textContent = '9';
+
+  // ====== RESET ACCORDION COLORS ======
+  document.querySelectorAll('.finding-head').forEach(function(h){
+    h.classList.remove('is-normal','has-pathology','collapsed');
+  });
+  // Re-show all accordion bodies
+  document.querySelectorAll('.finding-row').forEach(function(row){
+    Array.from(row.children).forEach(function(child){
+      child.style.display = '';
+    });
+  });
+
+  // ====== RESET DOSEG ======
+  var doseg = document.getElementById('peri_doseg');
+  if (doseg) doseg.selectedIndex = 0;
+  var razlogDiv = document.getElementById('peri_razlog_div');
+  if (razlogDiv) razlogDiv.style.display = 'none';
+
+  // ====== RESET KOMPLIKACIJE ======
+  var kompNone = document.getElementById('komp_none');
+  if (kompNone) kompNone.checked = true;
+  var kompOpis = document.getElementById('komp_opis');
+  if (kompOpis) kompOpis.style.display = 'none';
+
   // Master uredan reset
   if (typeof masterReset === 'function') masterReset();
   // Sticky panel reset
@@ -3517,6 +3577,13 @@ function sFormReset() {
   // Ime polje postavi na readonly=false i očisti
   var imeEl = document.getElementById('ime');
   if (imeEl) { imeEl.removeAttribute('readonly'); imeEl.value = ''; }
+  // Foto count reset
+  if (typeof updateFotoCount === 'function') updateFotoCount();
+  // Vials reset
+  if (typeof updateTotalVials === 'function') updateTotalVials();
+  // Atrofija state reset — osiguraj da norm checkboxovi nisu disabled
+  if (typeof updateAtrophyTexts === 'function') updateAtrophyTexts();
+  console.log('[sFormReset] Kompletni reset izvršen — v2.1.5-fix3');
 }
 
 function sNext() {
@@ -3568,300 +3635,6 @@ function sNext() {
     document.addEventListener('click', function(e) {
         if (e.target.id === 'report-modal') closeReportModal();
     });
-
-// FUNKCIJA ZA COLLAPSE VIDEA
-function toggleVideoCollapse() {
-    var area = document.getElementById('video-collapse-area');
-    var btn = document.getElementById('video-toggle-btn');
-    if (!area || !btn) return;
-
-    if (area.style.display === 'none') {
-        area.style.display = 'block';
-        btn.innerHTML = 'Skupi video &#9650;';
-    } else {
-        area.style.display = 'none';
-        btn.innerHTML = 'Rasklopi video &#9660;';
-    }
-}
-
-// ══════════════════════════════════════════════
-//  🎭  1. APRIL JOKE + 🥚 EASTER EGG
-// ══════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', function() {
-
-(function() {
-  var now = new Date();
-  if (now.getMonth() !== 3 || now.getDate() !== 1) return; // samo 1. travnja
-
-  // Provjeri je li već viđeno za ovaj rater danas
-  var raterEl = document.getElementById('sinput-rater');
-  var raterId = raterEl ? raterEl.value.trim() : '';
-  // Ako rater nije još upisan, čekamo — hookamo na input
-  function tryShow() {
-    var el = document.getElementById('sinput-rater');
-    if (!el) return;
-    var rid = el.value.trim();
-    if (!rid) return;
-    var key = 'april2026_' + rid;
-    if (localStorage.getItem(key)) return; // već viđeno
-    localStorage.setItem(key, '1');
-    showApril();
-  }
-
-  // Ako je rater već upisan pri loadu (npr. autofill)
-  if (raterId) {
-    var key = 'april2026_' + raterId;
-    if (!localStorage.getItem(key)) {
-      localStorage.setItem(key, '1');
-      showApril();
-    }
-    return;
-  }
-
-  // Inače čekaj da upiše rater ID
-  var rEl = document.getElementById('sinput-rater');
-  if (rEl) rEl.addEventListener('change', tryShow);
-
-  function showApril() {
-    var style = document.createElement('style');
-    style.textContent = [
-      '#april-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:999999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;}',
-      '#april-msg1{color:#fff;font-size:clamp(1.4rem,4vw,2.6rem);font-weight:bold;font-family:Arial,sans-serif;text-align:center;padding:0 2rem;opacity:0;transition:opacity 0.8s;}',
-      '#april-msg1.show{opacity:1;}',
-      '#april-msg2{color:#ff3b3b;font-size:clamp(2rem,7vw,5rem);font-weight:bold;font-family:Arial,sans-serif;text-align:center;letter-spacing:0.05em;opacity:0;transition:opacity 0.8s;}',
-      '#april-msg2.show{opacity:1;}',
-      '#april-sub{color:#aaa;font-size:clamp(0.85rem,2vw,1.1rem);font-family:Arial,sans-serif;text-align:center;opacity:0;transition:opacity 0.6s;}',
-      '#april-sub.show{opacity:1;}',
-      '#april-overlay.fadeout{opacity:0;transition:opacity 0.7s;}'
-    ].join('');
-    document.head.appendChild(style);
-
-    var overlay = document.createElement('div'); overlay.id = 'april-overlay';
-    overlay.innerHTML =
-      '<div id="april-msg1">STUDIJA JE ZAVRŠENA!<br>HVALA NA SUDJELOVANJU!</div>' +
-      '<div id="april-msg2">1. APRIL!</div>' +
-      '<div id="april-sub">Nastavite s ispunjavanjem.</div>';
-    document.body.appendChild(overlay);
-
-    setTimeout(function() { document.getElementById('april-msg1').classList.add('show'); }, 300);
-    setTimeout(function() { document.getElementById('april-msg2').classList.add('show'); }, 5500);
-    setTimeout(function() { document.getElementById('april-sub').classList.add('show'); }, 10000);
-    setTimeout(function() { overlay.classList.add('fadeout'); }, 12500);
-    setTimeout(function() { overlay.remove(); }, 13200);
-  }
-})();
-// ══════════════════════════════════════════════
-
-// ══════════════════════════════════════════════
-//  🥚  EASTER EGG — samo za RO7
-// ══════════════════════════════════════════════
-(function() {
-  var EGG_ID   = 'RO7';
-  var INTERVAL = 5 * 60 * 1000; // 5 minuta za sve
-  var eggTimer   = null;
-  var eggElapsed = 0;
-  var eggActive  = false;
-  var toastIdx   = 0;
-  var toastsVIP = [
-    'Polako, polako... jaje te prati!',
-    'Taj nalaz se sam ne ispiše...',
-    'Jaje pozdravlja RO7!',
-    'Brže, brže!',
-    'Hopa, opet ja!',
-    'Ovaj timer ne laže.',
-    'Pauza? Jaje kaže ne!',
-    'Što dulje tipkaš, češće dolazim.'
-  ];
-  var toastsSTD = [
-    'Polako, polako... jaje te prati!',
-    'Taj nalaz se sam ne ispiše...',
-    'Brže, brže!',
-    'Hopa, opet ja!',
-    'Ovaj timer ne laže.',
-    'Pauza? Jaje kaže ne!',
-    'Što dulje tipkaš, češće dolazim.'
-  ];
-  var toastsSTD = [
-    'Polako, polako... jaje te prati!',
-    'Taj nalaz se sam ne ispiše...',
-    'Brže, brže!',
-    'Hopa, opet ja!',
-    'Ovaj timer ne laže.',
-    'Pauza? Jaje kaže ne!',
-    'Što dulje tipkaš, češće dolazim.'
-  ];
-
-  function currentToasts() {
-    return isSpecial() ? toastsVIP : toastsSTD;
-  }
-
-  // Inject CSS
-  var style = document.createElement('style');
-  style.textContent = [
-    '#egg-lane{position:fixed;bottom:0;left:0;width:100%;height:110px;pointer-events:none;z-index:99999;overflow:hidden;display:none}',
-    '.egg-wrapper{position:absolute;bottom:10px;left:-130px;display:flex;flex-direction:column;align-items:center;animation:eggRoll 4.8s cubic-bezier(0.37,0,0.63,1) forwards}',
-    '@keyframes eggRoll{0%{left:-130px;transform:rotate(0deg)}8%{left:2%;transform:rotate(35deg)}92%{left:calc(100% - 10px);transform:rotate(690deg)}100%{left:calc(100% + 130px);transform:rotate(720deg)}}',
-    '.egg-svg{animation:eggWobble 0.32s ease-in-out infinite alternate;transform-origin:center bottom;width:70px;height:auto;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.2))}',
-    '@keyframes eggWobble{0%{transform:scaleX(1.00) scaleY(1.00) rotate(-3deg)}100%{transform:scaleX(0.94) scaleY(1.06) rotate(3deg)}}',
-    '.egg-shadow{width:50px;height:10px;background:radial-gradient(ellipse,rgba(0,0,0,0.18) 0%,transparent 70%);margin-top:-4px;animation:shadowPulse 0.32s ease-in-out infinite alternate}',
-    '@keyframes shadowPulse{0%{transform:scaleX(1.05);opacity:.7}100%{transform:scaleX(.88);opacity:.25}}',
-    '#egg-ground{position:fixed;bottom:108px;left:0;width:100%;height:1px;background:rgba(0,0,0,0.12);pointer-events:none;z-index:99998;opacity:0;transition:opacity .4s}',
-    '#egg-ground.show{opacity:1}',
-    '.egg-trail{position:fixed;pointer-events:none;z-index:99997;font-size:16px;animation:trailFade 1.8s ease-out forwards}',
-    '@keyframes trailFade{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-40px) scale(0.3)}}',
-    '.egg-dust{position:fixed;bottom:115px;pointer-events:none;z-index:99996;width:26px;height:26px;border-radius:50%;background:radial-gradient(circle,rgba(200,190,170,0.6) 0%,transparent 70%);animation:dustPuff .9s ease-out forwards}',
-    '@keyframes dustPuff{0%{transform:scale(.2);opacity:.8}100%{transform:scale(2.5);opacity:0}}',
-    '#egg-toast{position:fixed;bottom:125px;left:50%;transform:translateX(-50%) translateY(10px);background:#fff8e1;border:1.5px solid #ffe082;color:#6d4c00;border-radius:10px;padding:9px 20px;font-size:13px;font-weight:bold;font-family:Arial,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,0.15);opacity:0;z-index:100000;white-space:nowrap;pointer-events:none;transition:opacity .35s,transform .35s}',
-    '#egg-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}',
-    '#egg-progress-bar{position:fixed;bottom:0;left:0;height:3px;background:#01696f;transition:width .5s linear;z-index:99995;pointer-events:none;width:0%}'
-  ].join('');
-  document.head.appendChild(style);
-
-  // Inject HTML
-  var lane = document.createElement('div'); lane.id = 'egg-lane';
-  var ground = document.createElement('div'); ground.id = 'egg-ground';
-  var toast = document.createElement('div'); toast.id = 'egg-toast';
-  var pbar = document.createElement('div'); pbar.id = 'egg-progress-bar';
-  document.body.appendChild(lane);
-  document.body.appendChild(ground);
-  document.body.appendChild(toast);
-  document.body.appendChild(pbar);
-
-  function isSpecial() {
-    var el = document.getElementById('sinput-rater');
-    return el && el.value.trim() === EGG_ID;
-  }
-
-  function startEggTimer() {
-    if (eggActive) return;
-    eggActive = true;
-    eggElapsed = 0;
-    eggTimer = setInterval(function() {
-      eggElapsed += 1000;
-      var pct = (eggElapsed / INTERVAL) * 100;
-      pbar.style.width = pct + '%';
-      if (eggElapsed >= INTERVAL) {
-        eggElapsed = 0;
-        launchEgg();
-      }
-    }, 1000);
-  }
-
-  function stopEggTimer() {
-    eggActive = false;
-    clearInterval(eggTimer);
-    eggElapsed = 0;
-    pbar.style.width = '0%';
-  }
-
-  // Prati iste okidače kao originalni sWriteStart — samo kad je forma otključana (sUn)
-  document.addEventListener('change', function(e) {
-    if (typeof sUn === 'undefined' || !sUn) return; // forma još nije otključana
-    if (!eggActive) startEggTimer();
-  });
-
-  // Reset timera kad se mijenja rater
-  var raterEl = document.getElementById('sinput-rater');
-  if (raterEl) {
-    raterEl.addEventListener('input', function() {
-      stopEggTimer();
-    });
-  }
-
-  // 🥚 BRZI CSV hook — hookami tek nakon što se DOM fully loada
-  window.addEventListener('load', function() {
-    var _origDownload = window.sDownloadCSV;
-    window.sDownloadCSV = function() {
-      if (typeof _origDownload === 'function') _origDownload.apply(this, arguments);
-      var elapsed = (typeof sWriteStart !== 'undefined' && sWriteStart) ? (Date.now() - sWriteStart) : Infinity;
-      if (elapsed < 2 * 60 * 1000) {
-        setTimeout(function() {
-          showEggToast('Ovo je bilo impresivno brzo! Sigurno ne varaš? 🤔');
-          animateEgg();
-        }, 1600);
-      }
-    };
-  });
-  document.addEventListener('keydown', function(e) {
-    if (e.ctrlKey && e.shiftKey && e.key === 'E') launchEgg();
-  });
-
-  function launchEgg() {
-    var t = currentToasts();
-    showEggToast(t[toastIdx % t.length]);
-    toastIdx++;
-    animateEgg();
-  }
-
-  function showEggToast(msg) {
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(function() { toast.classList.remove('show'); }, 4500);
-  }
-
-  function animateEgg() {
-    lane.style.display = 'block';
-    ground.classList.add('show');
-
-    var wrap = document.createElement('div');
-    wrap.className = 'egg-wrapper';
-    wrap.innerHTML = '<svg class="egg-svg" viewBox="0 0 80 96" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-      '<ellipse cx="40" cy="56" rx="32" ry="38" fill="#FFF8E1"/>' +
-      '<ellipse cx="40" cy="56" rx="32" ry="38" stroke="#E8C84A" stroke-width="2.5"/>' +
-      '<ellipse cx="30" cy="36" rx="9" ry="6" fill="white" opacity="0.45" transform="rotate(-20 30 36)"/>' +
-      '<ellipse cx="30" cy="50" rx="4.5" ry="5" fill="#2d2516"/>' +
-      '<ellipse cx="50" cy="50" rx="4.5" ry="5" fill="#2d2516"/>' +
-      '<circle cx="31.8" cy="48" r="1.8" fill="white"/>' +
-      '<circle cx="51.8" cy="48" r="1.8" fill="white"/>' +
-      '<path d="M26 43 Q30 40 34 43" stroke="#2d2516" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M46 43 Q50 40 54 43" stroke="#2d2516" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-      '<ellipse cx="40" cy="57" rx="3" ry="2" fill="#F4A950"/>' +
-      '<path d="M29 63 Q40 73 51 63" stroke="#E88C2A" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
-      '<ellipse cx="20" cy="60" rx="6" ry="4" fill="#FFB3B3" opacity="0.65"/>' +
-      '<ellipse cx="60" cy="60" rx="6" ry="4" fill="#FFB3B3" opacity="0.65"/>' +
-      '<path d="M40 18 L44 25 L38 30 L43 35" stroke="#E8C84A" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' +
-      '<path d="M28 90 Q25 96 20 94" stroke="#F4A950" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-      '<path d="M52 90 Q55 96 60 94" stroke="#F4A950" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-      '</svg><div class="egg-shadow"></div>';
-    lane.appendChild(wrap);
-
-    wrap.addEventListener('animationend', function() {
-      wrap.remove();
-      lane.style.display = 'none';
-      ground.classList.remove('show');
-    });
-
-    // Prašina
-    [8,22,38,55,72,88].forEach(function(pct, i) {
-      setTimeout(function() {
-        var d = document.createElement('div');
-        d.className = 'egg-dust';
-        d.style.left = pct + '%';
-        document.body.appendChild(d);
-        d.addEventListener('animationend', function() { d.remove(); });
-      }, i * 500);
-    });
-
-    // Zvjezdice
-    var stars = ['✨','⭐','💫','🌟'];
-    var sc = 0;
-    var si = setInterval(function() {
-      if (sc >= 7) { clearInterval(si); return; }
-      var t = document.createElement('div');
-      t.className = 'egg-trail';
-      t.textContent = stars[Math.floor(Math.random() * stars.length)];
-      t.style.left = (4 + sc * 13) + '%';
-      t.style.bottom = '115px';
-      document.body.appendChild(t);
-      t.addEventListener('animationend', function() { t.remove(); });
-      sc++;
-    }, 420);
-  }
-
-})();
-// ══════════════════════════════════════════════
-
-}); // DOMContentLoaded
 </script>
 </body>
 </html>
