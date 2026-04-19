@@ -131,24 +131,24 @@
         .btn-gen { background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; width: 100%; margin-top: 20px; }
         .btn-gen:hover { background: #218838; }
 
-        /* DATA BUTTONS & DOWNLOAD */
-        .data-container { display: flex; gap: 10px; margin-top: 10px; }
+        /* HORDER BUTTONS & DOWNLOAD */
+        .dataview-container { display: flex; gap: 10px; margin-top: 10px; }
         
         /* Brown hamster for viewing */
-        .btn-data-view { 
+        .btn-dataview-view { 
             background: #8d6e63; color: white; padding: 10px 20px; border: none; border-radius: 5px; 
             cursor: pointer; font-size: 14px; font-weight: bold; flex: 1; display: flex;
             align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-data-view:hover { background: #6d4c41; }
+        .btn-dataview-view:hover { background: #6d4c41; }
 
         /* Black hamster for download */
-        .btn-csv-download {
+        .btn-black-hamster {
             background: #212121; color: white; padding: 10px 20px; border: none; border-radius: 5px; 
             cursor: pointer; font-size: 14px; font-weight: bold; flex: 1; display: flex;
             align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-csv-download:hover { background: #000000; }
+        .btn-black-hamster:hover { background: #000000; }
         
         /* RAW TABLE STYLE */
         .raw-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; font-family: monospace; border: 1px solid #ccc; }
@@ -158,7 +158,7 @@
         .raw-table tr:hover { background-color: #f1f1f1; }
         .val-yes { color: green; font-weight: bold; }
         .val-no { color: #aaa; }
-        #raw-data-output { margin-top: 20px; border-top: 2px dashed #546e7a; padding-top: 20px; display: none;}
+        #dataview-output { margin-top: 20px; border-top: 2px dashed #8d6e63; padding-top: 20px; display: none;}
 
         .nested-sib { margin-left: 20px; border-left: 2px dotted #ccc; padding-left: 10px; margin-top: 5px; }
 
@@ -440,12 +440,12 @@
     <span id="svlevel" style="padding:2px 10px;border-radius:12px;background:rgba(255,255,255,.15)">&ndash;</span>
     <span id="svstatus">&#9208; Pokrenite video</span>
     <span id="svpct">0%</span>
-    <button id="video-toggle-btn" type="button" onclick="toggleVideoCollapse()" style="margin-left: 15px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: bold; transition: background 0.2s;">Skupi video &#9650;</button>
-  </div>
+      <button id="video-toggle-btn" type="button" onclick="toggleVideoCollapse()" style="margin-left: 15px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: bold; transition: background 0.2s;">Skupi video &#9650;</button>
+        </div>
   <div id="video-collapse-area">
-  <iframe id="svideo" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        <iframe id="svideo" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
   <div class="sprogbar"><div id="svprogfill"></div></div>
-  </div>
+        </div>
 </div>
 
 <div id="sformlock" style="display:none">
@@ -796,6 +796,7 @@
 <div class="finding-controls" id="acc-jednjak-body">
 <label class="normal-check"><input id="jednjak_norm" onchange="toggleInput('jednjak_txt', this)" type="checkbox"/> Uredan</label>
 
+
 <!-- Inlet Patch -->
 
 <!-- Divertikul -->
@@ -1080,6 +1081,8 @@
 <div class="finding-controls" id="acc-kardija-body">
 <label class="normal-check"><input id="kardija_norm" onchange="toggleInput('kardija_txt', this)" type="checkbox"/> Uredna sluznica</label>
 
+
+
 <div class="bio-dynamic-wrapper" data-base-loc="kardija" data-type="normal" data-loc-name="Kardija" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
 <div class="patho-section">
@@ -1104,9 +1107,12 @@
 <div class="finding-controls" id="acc-fundus-body">
 <label class="normal-check"><input id="fundus_norm" onchange="toggleInput('fundus_txt', this)" type="checkbox"/> Uredan</label>
 
+
+
 <div class="bio-dynamic-wrapper" data-base-loc="fundus" data-type="normal" data-loc-name="Fundus" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
 <!-- INFLAMMATION PANEL -->
+
 
 <div class="patho-section">
 <label class="patho-toggle-label"><input id="pat_cb_fundus" onchange="document.getElementById('pat_panel_fundus').classList.toggle('hidden',!this.checked);
@@ -1129,6 +1135,8 @@
 <div class="finding-head" id="acc-korpus-head" onclick="toggleAccordion('acc-korpus')">Korpus <span class="acc-arrow">▼</span></div>
 <div class="finding-controls" id="acc-korpus-body">
 <label class="normal-check"><input id="korpus_norm" onchange="toggleInput('korpus_txt', this)" type="checkbox"/> Uredan</label>
+
+
 
 <div class="bio-dynamic-wrapper" data-base-loc="korpus" data-type="normal" data-loc-name="Korpus" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
@@ -1242,7 +1250,7 @@
 <text x="613" y="254" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:9px;font-weight:bold;fill:#fff;">O-3</text>
 <text x="613" y="267" text-anchor="middle" style="font-family:Arial,sans-serif;font-size:8px;fill:#c62828;font-weight:bold;">visok</text>
 <rect x="52" y="276" width="10" height="10" rx="1" fill="#bfdbfe" stroke="#0369a1" stroke-width="0.6"/>
-<text x="66" y="285" style="font-family:Arial,sans-serif;font-size:8px;fill:#444;">Atrofična sluznica (blijeda, bez žljezdanog tkiva)</text>
+<text x="66" y="285" style="font-family:Arial,sans-serif;font-size:8px;fill:#444;">Atrofična sluznica</text>
 <rect x="320" y="276" width="10" height="10" rx="1" fill="#fff5f5" stroke="#c88888" stroke-width="0.6"/>
 <text x="334" y="285" style="font-family:Arial,sans-serif;font-size:8px;fill:#444;">Uredna fundična sluznica</text>
 <text x="490" y="285" style="font-family:Arial,sans-serif;font-size:8px;fill:#555;">&#8212; = atrofična granica (F-linija)</text>
@@ -1258,14 +1266,17 @@
 <label><input type="radio" name="kt_klasifikacija" value="O-3 (potpuna atrofija korpusa)" onchange="syncKT('radio')"> <strong>O-3</strong> <small style="color:#c62828;">cijeli korpus + fundus</small></label>
 </div>
 <div id="kt_fundus_warning" class="hidden" style="margin-top:6px; font-size:0.85em; color:#d32f2f; font-weight:bold;">* O-3: atrofija automatski obuhvaća i fundus.</div>
-    </div></div></div></div><textarea class="pathology-input" id="korpus_txt" oninput="autoUncheckNormal('korpus_norm')" rows="1"></textarea>
+    </div>
 </div>
+</div></div></div><textarea class="pathology-input" id="korpus_txt" oninput="autoUncheckNormal('korpus_norm')" rows="1"></textarea>
 </div>
 <!-- ANTRUM (WITH INFLAM) -->
 <div class="finding-row">
 <div class="finding-head" id="acc-antrum-head" onclick="toggleAccordion('acc-antrum')">Antrum <span class="acc-arrow">▼</span></div>
 <div class="finding-controls" id="acc-antrum-body">
 <label class="normal-check"><input id="antrum_norm" onchange="toggleInput('antrum_txt', this)" type="checkbox"/> Uredan</label>
+
+
 
 <div class="bio-dynamic-wrapper" data-base-loc="antrum" data-type="normal" data-loc-name="Antrum" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
@@ -1307,11 +1318,13 @@
 <div class="finding-controls" id="acc-bulbus-body">
 <label class="normal-check"><input id="duod_norm" onchange="toggleInput('duod_txt', this)" type="checkbox"/> Uredan</label>
 
+
+
 <div class="bio-dynamic-wrapper" data-base-loc="duod" data-type="normal" data-loc-name="Bulbus" style="margin-top:8px; background:#f9fcfb; padding:8px; border-radius:5px; border:1px solid #dcdcdc;"><label class="bio-check" style="font-weight:bold; color:#0277bd;"><input type="checkbox" class="bio-main-cb" onchange="toggleBioDyn(this)"> 🧫 Uzeti biopsiju</label><div class="bio-vials hidden" style="margin-top:6px; display:flex; flex-direction:column; gap:6px; margin-left:24px;"><div class="vial-row"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div><div class="vial-row hidden"><label style="font-size:0.9em; font-weight:bold;">Bočica: <input type="number" class="vial-input" style="width:60px; text-align:center;" oninput="checkNextBio(this)"></label></div></div></div>
 </div>
 <div class="patho-section">
 <label class="patho-toggle-label"><input id="pat_cb_bulbus" onchange="document.getElementById('pat_panel_bulbus').classList.toggle('hidden',!this.checked);
-            if(this.checked) autoUncheckNormal('duod_norm');" type="checkbox"/> 🔴 PATOLOGIJA</label>
+            if(this.checked) autoUncheckNormal('bulbus_norm');" type="checkbox"/> 🔴 PATOLOGIJA</label>
 <div class="hidden patho-panel" id="pat_panel_bulbus"><div class="inflam-panel">
   <label style="font-weight:bold;color:#d84315;">
     <input id="bulbus_upala" type="checkbox" onchange="autoUncheckNormal('duod_norm'); toggleInflam('bulbus')"> Znakovi upale (hiperemija)
@@ -1329,6 +1342,7 @@
 <div class="finding-head" id="acc-silazni-head" onclick="toggleAccordion('acc-silazni')">DVANESNIK – SILAZNI DIO (D2) <span class="acc-arrow">▼</span></div>
 <div class="finding-controls" id="acc-silazni-body">
 <label class="normal-check"><input id="silazni_norm" onchange="toggleInput('silazni_txt', this)" type="checkbox"/> Uredan</label>
+
 
 <div class="patho-section">
 <label class="patho-toggle-label"><input id="pat_cb_silazni" onchange="document.getElementById('pat_panel_silazni').classList.toggle('hidden',!this.checked);
@@ -1417,7 +1431,7 @@
 <label><input id="komp_ostalo" name="komplikacije" onchange="document.getElementById('komp_opis').style.display='block'" type="radio" value="Ostalo"/> Ostalo</label>
 <input id="komp_opis" placeholder="Opišite komplikaciju..." style="display:none;width:100%;margin-top:6px;" type="text"/>
 </div>
-<h4 id="foto-section" style="color:#0056b3;">Fotodokumentacija (ESGE STAR 2025 – min. 10 fotografija)</h4>
+<h4 style="color:#0056b3;">Fotodokumentacija (ESGE STAR 2025 – min. 10 fotografija)</h4>
 <div style="background:#e8f4f8;padding:12px;border-radius:5px;border:1px solid #b3d4fc;margin-bottom:15px;">
 <p style="font-size:0.85em;color:#444;margin:0 0 10px 0;">
     Prema <b>ESGE STAR projektu (Esposito et al., 2025)</b> i <b>ESGE Performance Measures</b> preporučuje se min. 10 fotografija anatomskih orijentira.
@@ -1467,12 +1481,12 @@
 </div>
 </section>
 <button class="btn-gen" onclick="generateFullReport()">GENERIRAJ PUNI NALAZ</button>
-<div class="data-container">
-<button class="btn-data-view" onclick="hoardData()">📊 Prikaži Raw Podatke</button>
-<button class="btn-csv-download" onclick="downloadCSV()">📥 Preuzmi .CSV</button>
+<div class="dataview-container">
+<button class="btn-dataview-view" onclick="hoardData()">📊 Prikaži Raw Podatke</button>
+<button class="btn-black-hamster" onclick="downloadCSV()">📊🖤 Preuzmi .CSV</button>
 </div>
 <div id="report"></div>
-<div id="raw-data-output"></div>
+<div id="dataview-output"></div>
 </div>
 
 <!-- REPORT MODAL -->
@@ -1503,8 +1517,8 @@
     let qualityTimerStart = null;
 
     document.addEventListener('input', function initTimer() {
-        if (!qualityTimerStart && sUn) qualityTimerStart = new Date();
-    });
+        if (!qualityTimerStart) qualityTimerStart = new Date();
+    }, { once: true });
 
     function checkFasting() {
         const h = document.getElementById('post_hrana').value;
@@ -1881,9 +1895,9 @@
         document.getElementById('res_m').textContent = valM >= 0 ? valM : "Err";
     }
 
-    // --- RAW DATA FUNCTION (VISUAL) ---
+    // --- HORDER FUNCTION (VISUAL) ---
     function hoardData() {
-        let tableHTML = '<h3 style="color:#8d6e63;">📊 Raw Data (Preview)</h3><table class="raw-table"><thead><tr><th>ID Elementa</th><th>Tip</th><th>Vrijednost</th></tr></thead><tbody>';
+        let tableHTML = '<h3 style="color:#8d6e63;">📊 DataView Raw Data (Preview)</h3><table class="raw-table"><thead><tr><th>ID Elementa</th><th>Tip</th><th>Vrijednost</th></tr></thead><tbody>';
         
         // QA timer
         let _hoardTime = "Nije izmjereno";
@@ -1914,7 +1928,7 @@
         });
         
         tableHTML += '</tbody></table>';
-        const output = document.getElementById('raw-data-output');
+        const output = document.getElementById('dataview-output');
         output.innerHTML = tableHTML;
         output.style.display = 'block';
     }
@@ -2314,7 +2328,16 @@
 
     // --- GENERATOR ---
     function segUpalaInline(segId, patName, locStr) {
-        // Atrofija i upala mogu koegzistirati — upala se generira neovisno
+        let _r2    = document.querySelector('input[name="kt_klasifikacija"]:checked');
+        let _kv    = _r2 ? _r2.value : "";
+        let _kact  = document.getElementById('kt_korpus_active');
+        let _kon   = _kact && _kact.checked;
+        let _isC1  = _kv.includes('C-1');
+        let _isO3  = _kv.includes('O-3');
+        let _fAtEl = document.getElementById('fundus_atrofija');
+        if (segId === 'antrum' && _kon)                                  return '';
+        if (segId === 'korpus' && _kon && !_isC1)                        return '';
+        if (segId === 'fundus' && ((_fAtEl && _fAtEl.checked) || _isO3)) return '';
         var el = document.getElementById(segId + '_upala');
         if (!el || !el.checked) return '';
         var r    = document.querySelector('input[name="' + patName + '"]:checked');
@@ -2630,6 +2653,7 @@
             jednjakFinal += esgeSentence;
         }
 
+
         const parisJednjakTxt = getAllParisReports('jednjak', 'jednjaku');
         if (parisJednjakTxt) jednjakFinal = (jednjakFinal ? jednjakFinal + ' ' : '') + parisJednjakTxt;
         const lacerJednjakTxt = getLacerReport('jednjak', 'jednjaku');
@@ -2748,16 +2772,6 @@
             const txEl   = document.getElementById(txtId);
             const manual = txEl ? txEl.value.trim() : '';
 
-            // Kad je segment pod atrofijom: buildSeg vraća '' jer KT tekst
-            // pokriva atrofiju globalno. Upala se dodaje ZASEBNO kroz segUpalaInline.
-            if (_segUnderAtro) {
-                if (manual) return manual.endsWith('.') ? manual : manual + '.';
-                if (normId === 'fundus_norm' && _fundusAtroCb && !_isO3) {
-                    return 'Sluznica fundusa je atrofična.';
-                }
-                return '';
-            }
-
             if (upalaId) {
                 const uEl = document.getElementById(upalaId);
                 if (uEl && uEl.checked) {
@@ -2773,6 +2787,7 @@
             if (normId === 'fundus_norm' && _fundusAtroCb && !_isO3) {
                 return 'Sluznica fundusa je atrofična.';
             }
+            if (_segUnderAtro) return '';
             return defaultTxt;
         }
 
@@ -2792,6 +2807,7 @@
         const _upala_antrum = segUpalaInline('antrum', 'antrum_upala_pat', 'antrumu');
         if (_upala_antrum) antrumTxt = (antrumTxt ? antrumTxt + ' ' : '') + _upala_antrum;
         [getAllParisReports('antrum','antrumu'),    getAllForrestReports('antrum','antrumu'),    getLacerReport('antrum','antrumu')].forEach(t=>{ if(t) antrumTxt=(antrumTxt?antrumTxt+' ':'')+t; });
+
 
         var _igv1 = document.getElementById('igv1_fundus');
         if (_igv1 && _igv1.checked) {
@@ -3178,6 +3194,7 @@ ${postReport}
         Object.entries(txMap).forEach(function(e){var cb=document.getElementById(e[0]);if(cb)toggleInput(e[1],cb);});
     });
 
+
     function toggle2ndDegree() {
         var e = document.getElementById('fam_2nd_opts');
         var a = document.getElementById('fam_2nd_active');
@@ -3232,28 +3249,28 @@ var SC = {
   "EGD002": "1dHqvUaZxmPs8bTmyY6xEHFU5KXlk8i8f",
   "EGD003": "1k9lvEX7rHWI0MlTk0E-UTk5tTqvO3LOo",
   "EGD004": "1xOtJq4It9SJem6Ke2gBv8yYV4C5rj7HU",
-  "EGD005": "1DfWwFu_DtG2XJpLtCZ6PC85dRL5Z_R40",
-  "EGD006": "1jC2QwKyzjqgSQnEdExLGJIPR8b0xmrRh",
-  "EGD007": "1FAeuS-AZ6ZSXJnbK5_hklVJrhyE9zsVn",
+  "EGD005": "1v9ShOg36leT70_TNlHg70gqpgkXEp3as",
+  "EGD006": "1Mv_DmoA-9jazRQ0vGlobpQplVQM9ziIU",
+  "EGD007": "14D9FBrnQiMGSjhCD1IDKvJZFzj91hncR",
   "EGD008": "1TinIM_916Hm2s-PshyEqGoc484l4J8IU",
   "EGD009": "1g0TUOqpalJVK52sAEKlmITDE3rcsoVff",
   "EGD010": "1Lpj0Lv3ZxKCZinbWO1bZiP5MEnLCRVif",
   "EGD011": "1rRL-CN8oGrvdH0ZzR6HKOYcFzecmniiy",
-  "EGD012": "1o87w_HDPMHLjykBCdg3oND_1awv9y5q8",
+  "EGD012": "1sZbjlhAc9iXJbewte9ucmQK519dCfHTb",
   "EGD013": "1oY2CFsp_Sr0kSvXzg-nBvA7t5p-581BC",
   "EGD014": "1cugmaO9yUQZODOH1gkPwFGly5h697ap1",
-  "EGD015": "1dZ9gSOEVkY4QinBOfvThpi7drklyNLa-",
-  "EGD016": "1webQMX6RtAUAphxQQ1VKUPP7ApB_FtgK",
-  "EGD017": "1_6w0dyqQ9ikfI444GCQ_czeu2xhe7qL5",
+  "EGD015": "19vU5xPQegm6MIb-HZQefiBX_kXwhL5El",
+  "EGD016": "1wGWgu_z70RPT8ROIujzT7JCHMQVVUk-p",
+  "EGD017": "1vTGFtjqRZOHFbfYHMM_TGNmV1yuc4xJv",
   "EGD018": "11_BjhxgB-c7NGW7VVKvpc4Q-WIodGRYD",
   "EGD019": "1Sncb2VPvrNv9Wl_znjXfYqzB5CH2Hv20",
-  "EGD020": "1RDNzNr49Wr5lnSMnFvt9hxpeFSJMk0ZW",
+  "EGD020": "1RuW_kHaMvfCev6lvvPHozkxbacBh3a2x",
   "EGD021": "13BITh6tAf8_UN0Z4ok7leyxXWH-mwTqT",
   "EGD022": "1AMJj61siXSFxxkB8iW7CYj6PI7Bwx4yq",
   "EGD023": "1RUAlym7-5XYl0IWZeP8onNzBISFkU2Gx",
   "EGD024": "1LOYn2Rbkq6Gf4Pnvpae-HIDA7fTg6Akc",
   "EGD025": "1kPNYZb8s-5N4vMAbTR0JUTw39X8G5j0C",
-  "EGD026": "1i-nLhjli7FLKzH51telOSnUOwLSpkjUr",
+  "EGD026": "1kyPIpTe_W_g1Pk2smsem6E8JXMOPYWOl",
   "EGD027": "1XgIM7d7A_UVD-Z7lsy2JPWsoclqsCuEm",
   "EGD028": "1ACfaNhIz-TGYxpmDCepHF25ag9ZgnswX",
   "EGD029": "1oePikT6vtbaTz5tyHYq1R_S5L5Bq-sqR",
@@ -3262,6 +3279,7 @@ var SC = {
 var SAU = 'https://script.google.com/macros/s/AKfycbxzFvzPkRuUZ7x9I4zU5Hm5MolpQfjbk7yVomW8dcvpfds_fTk7m9cob8mBspWuq9B3jg/exec';
 var MW  = 120; // sekundi
 var sR='', sC='', sPct=0, sUn=false, sTmr=null, sExp='', sWriteStart=null, sWriteSec=0, sWriteTmr=null;
+
 
 function togglePreSection() {
   var body    = document.getElementById('pre-body');
@@ -3281,18 +3299,18 @@ function togglePreSection() {
 function updatePreSummary() {
   var ime    = (document.getElementById('ime')?.value || '').trim() || '—';
   var datum  = document.getElementById('datum')?.value || '';
-  var asaEl  = document.getElementById('pre_asa');
+  var asaEl  = document.getElementById('preasa');
   var asaVal = asaEl ? asaEl.value : '';
   var asaTxt = (asaVal && asaVal !== '-- Odaberi --')
     ? (asaVal.match(/ASA (I{1,3}V?|V)/)?.[0] || asaVal) : '—';
-  var consent = document.getElementById('pre_consent')?.checked
+  var consent = document.getElementById('preconsent')?.checked
     ? '✓ Pristanak' : '✗ Bez pristanka';
   var indCount = document.querySelectorAll('.ind-cb:checked').length;
   var indTxt   = indCount > 0 ? (indCount + ' ind.') : '';
-  var hpTxt    = document.getElementById('hp_stat_naivni')?.checked ? 'HP: Naivni'
-    : document.getElementById('hp_stat_lijeceni')?.checked ? 'HP: Liječeni' : '';
-  var hrana  = document.getElementById('post_hrana')?.value || '';
-  var teku   = document.getElementById('post_teku')?.value || '';
+  var hpTxt    = document.getElementById('hpstatnaivni')?.checked ? 'HP: Naivni'
+    : document.getElementById('hpstatlijeceni')?.checked ? 'HP: Liječeni' : '';
+  var hrana  = document.getElementById('posthrana')?.value || '';
+  var teku   = document.getElementById('postteku')?.value || '';
   var fastTxt = (hrana || teku)
     ? ('glad: ' + (hrana||'?') + 'h / tek: ' + (teku||'?') + 'h') : '';
   var parts = [ime, datum, asaTxt, consent, indTxt, hpTxt, fastTxt].filter(Boolean);
@@ -3368,7 +3386,7 @@ function sStart() {
 }
 
 function sTicker() {
-  var el = 0;
+  var v = document.getElementById("svideo"); var el = v && v.duration && !isNaN(v.duration) ? v.currentTime : 0;
   document.getElementById('svstatus').textContent = '⏱ Gledanje...';
   sTmr = setInterval(function() {
     if (document.visibilityState !== 'visible') return;
@@ -3391,33 +3409,30 @@ function sTicker() {
 function sUnlock() {
   sUn = true;
   document.getElementById('sformlock').style.display = 'none';
+
+    // Automatski skupi video kad se otkljuca forma
+    var area = document.getElementById('video-collapse-area');
+    var btn = document.getElementById('video-toggle-btn');
+    if (area && btn && area.style.display !== 'none') {
+        area.style.display = 'none';
+        btn.innerHTML = 'Rasklopi video &#9660;';
+    }
+
   var st = document.getElementById('svstatus');
   st.textContent = '✅ Video odgledan';
   st.style.background = 'rgba(76,175,80,.35)';
   st.style.color = '#b9f6ca';
-  // Start writing timer — deferred until first actual input
-  sWriteStart = null;
+  // Start writing timer
+  sWriteStart = Date.now();
   sWriteSec = 0;
   if (sWriteTmr) clearInterval(sWriteTmr);
-  sWriteTmr = null;
-  // Listen for first real interaction to start timer
-  function startWriteOnInput() {
-    if (sWriteStart) return; // already started
-    sWriteStart = Date.now();
-    sWriteTmr = setInterval(function() {
-      sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
-      var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
-      var ws = String(sWriteSec%60).padStart(2,'0');
-      var el = document.getElementById('sp-trajanje');
-      if (el) el.textContent = wm + ':' + ws + ' min';
-    }, 1000);
-  }
-  document.getElementById('findings-section').addEventListener('input', startWriteOnInput, { once: true });
-  document.getElementById('findings-section').addEventListener('change', startWriteOnInput, { once: true });
-  document.getElementById('peri-section').addEventListener('input', startWriteOnInput, { once: true });
-  document.getElementById('peri-section').addEventListener('change', startWriteOnInput, { once: true });
-  document.getElementById('post-section').addEventListener('input', startWriteOnInput, { once: true });
-  document.getElementById('post-section').addEventListener('change', startWriteOnInput, { once: true });
+  sWriteTmr = setInterval(function() {
+    sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
+    var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
+    var ws = String(sWriteSec%60).padStart(2,'0');
+    var el = document.getElementById('sp-trajanje');
+    if (el) el.textContent = wm + ':' + ws + ' min';
+  }, 1000);
   var t = document.createElement('div');
   t.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#4caf50;color:#fff;padding:13px 32px;border-radius:10px;font-weight:bold;z-index:9997;box-shadow:0 4px 20px rgba(0,0,0,.35);white-space:nowrap;font-size:1.05em';
   t.textContent = '✅ Možete popuniti obrazac!';
@@ -3425,11 +3440,6 @@ function sUnlock() {
   setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3200);
   document.getElementById('snextsec').style.display = 'block';
   window.scrollTo({top: 0, behavior: 'smooth'});
-  // Auto-collapse video after unlock
-  var area = document.getElementById('video-collapse-area');
-  var btn = document.getElementById('video-toggle-btn');
-  if (area) area.style.display = 'none';
-  if (btn) btn.innerHTML = 'Rasklopi video &#9660;';
 }
 
 function sForceUnlock() {
@@ -3438,19 +3448,6 @@ function sForceUnlock() {
   document.getElementById('svprogfill').style.width = '100%';
   document.getElementById('lprogfill').style.width  = '100%';
   sUnlock();
-}
-
-function toggleVideoCollapse() {
-    var area = document.getElementById('video-collapse-area');
-    var btn = document.getElementById('video-toggle-btn');
-    if (!area || !btn) return;
-    if (area.style.display === 'none') {
-        area.style.display = 'block';
-        btn.innerHTML = 'Skupi video &#9650;';
-    } else {
-        area.style.display = 'none';
-        btn.innerHTML = 'Rasklopi video &#9660;';
-    }
 }
 
 function eCSV(v) {
@@ -3506,7 +3503,6 @@ function sDownloadCSV() {
 }
 
 function sFormReset() {
-  
   // Reset sve checkboxeve i radio gumbe
   document.querySelectorAll('input[type=checkbox]').forEach(function(el){ el.checked = false; });
   document.querySelectorAll('input[type=radio]').forEach(function(el){ el.checked = false; });
@@ -3532,12 +3528,6 @@ function sFormReset() {
     if (cb) { cb.disabled = false; cb.checked = false; }
   });
 
-  // ====== RESET KT ATROFIJA STATE ======
-  var ktOpts = document.getElementById('kt_korpus_options');
-  if (ktOpts) ktOpts.classList.add('hidden');
-  var ktWarn = document.getElementById('kt_fundus_warning');
-  if (ktWarn) ktWarn.classList.add('hidden');
-
   // ====== RESET TEXTAREA OPACITY / POINTER-EVENTS ======
   ['jednjak_txt','kardija_txt','fundus_txt','korpus_txt',
    'antrum_txt','pilorus_txt','duod_txt','silazni_txt'].forEach(function(id){
@@ -3550,13 +3540,17 @@ function sFormReset() {
     }
   });
 
+  // ====== RESET KT ATROFIJA STATE ======
+  var ktOpts = document.getElementById('kt_korpus_options');
+  if (ktOpts) ktOpts.classList.add('hidden');
+  var ktWarn = document.getElementById('kt_fundus_warning');
+  if (ktWarn) ktWarn.classList.add('hidden');
+
   // ====== RESET PATHO PANELS ======
   document.querySelectorAll('.patho-panel').forEach(function(el){ el.classList.add('hidden'); });
-  // Reset Paris/Forrest/Lacer panels
   document.querySelectorAll('.paris-panel, .forrest-panel, .lacer-panel').forEach(function(el){
     el.classList.add('hidden'); el.classList.remove('visible');
   });
-  // Reset inflammation panels
   document.querySelectorAll('.inflam-opts').forEach(function(el){ el.classList.add('hidden'); });
 
   // GRACE score reset na default 3
@@ -3571,11 +3565,8 @@ function sFormReset() {
   document.querySelectorAll('.finding-head').forEach(function(h){
     h.classList.remove('is-normal','has-pathology','collapsed');
   });
-  // Re-show all accordion bodies
   document.querySelectorAll('.finding-row').forEach(function(row){
-    Array.from(row.children).forEach(function(child){
-      child.style.display = '';
-    });
+    Array.from(row.children).forEach(function(child){ child.style.display = ''; });
   });
 
   // ====== RESET DOSEG ======
@@ -3599,7 +3590,7 @@ function sFormReset() {
   // Study state reset
   sPct = 0; sUn = false; sWriteSec = 0; sWriteStart = null;
   if (sWriteTmr) { clearInterval(sWriteTmr); sWriteTmr = null; }
-  // Pre-body expand (treba biti otvoren za novi unos pacijenta)
+  // Pre-body expand
   var preBody = document.getElementById('pre-body');
   if (preBody) {
     preBody.style.display = '';
@@ -3612,11 +3603,8 @@ function sFormReset() {
   if (imeEl) { imeEl.removeAttribute('readonly'); imeEl.value = ''; }
   // Foto count reset
   if (typeof updateFotoCount === 'function') updateFotoCount();
-  // Vials reset
   if (typeof updateTotalVials === 'function') updateTotalVials();
-  // Atrofija state reset — osiguraj da norm checkboxovi nisu disabled
   if (typeof updateAtrophyTexts === 'function') updateAtrophyTexts();
-  console.log('[sFormReset] Kompletni reset izvršen — v2.1.5-fix3');
 }
 
 function sNext() {
@@ -3668,6 +3656,21 @@ function sNext() {
     document.addEventListener('click', function(e) {
         if (e.target.id === 'report-modal') closeReportModal();
     });
+
+// FUNKCIJA ZA COLLAPSE VIDEA
+function toggleVideoCollapse() {
+    var area = document.getElementById('video-collapse-area');
+    var btn = document.getElementById('video-toggle-btn');
+    if (!area || !btn) return;
+
+    if (area.style.display === 'none') {
+        area.style.display = 'block';
+        btn.innerHTML = 'Skupi video &#9650;';
+    } else {
+        area.style.display = 'none';
+        btn.innerHTML = 'Rasklopi video &#9660;';
+    }
+}
 </script>
 </body>
 </html>
