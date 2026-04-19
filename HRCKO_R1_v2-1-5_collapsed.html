@@ -70,16 +70,11 @@ body.dark-mode .score-display{background:#1a3a5c!important;color:#90caf9!importa
 #svstatus{padding:3px 12px;border-radius:20px;background:rgba(255,255,255,.15)}
 #svpct{margin-left:auto!important;color:#fff!important}
 #svideo{width:100%;height:340px;border:none;border-radius:10px;background:#000;display:none}
-.sprogbar{height:7px;background:rgba(255,255,255,.2);border-radius:4px;margin-top:6px;overflow:hidden}
-#svprogfill{height:100%;background:#4caf50;border-radius:4px;width:0;transition:width .4s}
 #sformlock{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:980;display:flex;align-items:center;justify-content:center}
 .lockbox{background:#fff;border-radius:16px;padding:44px 48px;text-align:center;max-width:440px;width:92%;box-shadow:0 12px 48px rgba(0,0,0,.6)}
 .licon{font-size:3em;display:block;margin-bottom:12px}
 .lockbox h3{color:#1a237e;margin:0 0 10px;font-size:1.25em}
 .lockbox p{color:#555;margin:0 0 18px;font-size:.95em;line-height:1.55}
-#lprogwrap{height:14px;background:#e8eaf6;border-radius:7px;margin-bottom:10px;overflow:hidden}
-#lprogfill{height:100%;background:linear-gradient(90deg,#1976d2,#4caf50);border-radius:7px;width:0;transition:width .4s}
-#lprogtxt{color:#777;font-size:.88em}
 #vidwarn{background:#fff8e1;border:1px solid #ffd54f;border-radius:8px;padding:14px 18px;margin-top:14px;font-size:.85em;color:#795548;text-align:center;display:none}
 #snextsec{display:none;margin-top:24px;padding:22px 26px;background:#e8f5e9;border-radius:12px;border:2px solid #4caf50;text-align:center}
 /* WRITE TIMER – sticky panel (identično R2) */
@@ -165,7 +160,6 @@ body.dark-mode .score-display{background:#1a3a5c!important;color:#90caf9!importa
         </div>
   <div id="video-collapse-area">
         <iframe id="svideo" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-  <div class="sprogbar"><div id="svprogfill"></div></div>
         </div>
 </div>
 
@@ -173,12 +167,10 @@ body.dark-mode .score-display{background:#1a3a5c!important;color:#90caf9!importa
   <div class="lockbox">
     <span class="licon">&#127916;</span>
     <h3>Pogledajte video</h3>
-    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Forma se otklju&#269;ava automatski.</p>
-    <div id="lprogwrap"><div id="lprogfill"></div></div>
-    <small id="lprogtxt">Pokrenite video...</small>
+    <p>Pogledajte video pa kliknite gumb kad ste spremni pisati nalaz.</p>
     <div id="vidwarn"></div>
-    <br><br>
-    <button onclick="sForceUnlock()" style="background:none;border:1px dashed #ccc;color:#bbb;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:.78em">Problem s videom? Otklju&#269;aj ru&#269;no</button>
+    <br>
+    <button onclick="sForceUnlock()" style="background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;border:none;padding:14px 32px;border-radius:10px;cursor:pointer;font-size:1.1em;font-weight:bold;box-shadow:0 4px 16px rgba(0,0,0,.3)">&#9998; Spreman/na sam &ndash; otklju&#269;aj formu</button>
   </div>
 </div>
 
@@ -260,9 +252,6 @@ function sStart() {
   document.getElementById('svstatus').style.background = 'rgba(255,255,255,.15)';
   document.getElementById('svstatus').style.color = '';
   document.getElementById('svpct').textContent = '0%';
-  document.getElementById('svprogfill').style.width = '0%';
-  document.getElementById('lprogfill').style.width  = '0%';
-  document.getElementById('lprogtxt').textContent = 'Pokrenite video...';
   document.getElementById('snextsec').style.display = 'none';
   var raw  = SC[sC] || '';
   var parts = raw.split('|');
@@ -294,34 +283,42 @@ function sStart() {
   // Round 1: samo slobodan upis
 
   document.getElementById('sformlock').style.display = 'flex';
-  sTicker();
-}
-
-function sTicker() {
-  var v = document.getElementById("svideo"); var el = v && v.duration && !isNaN(v.duration) ? v.currentTime : 0;
-  document.getElementById('svstatus').textContent = '⏱ Gledanje...';
-  sTmr = setInterval(function() {
-    if (document.visibilityState !== 'visible') return;
-    el++;
-    var p  = Math.min((el / MW) * 100, 100);
-    sPct   = p;
-    var r  = Math.max(MW - el, 0);
-    var mm = String(Math.floor(r / 60)).padStart(2,'0');
-    var ss = String(r % 60).padStart(2,'0');
-    document.getElementById('svprogfill').style.width = p.toFixed(1) + '%';
-    document.getElementById('lprogfill').style.width  = p.toFixed(1) + '%';
-    document.getElementById('svpct').textContent = Math.floor(p) + '%';
-    document.getElementById('lprogtxt').textContent  = 'Preostalo: ' + mm + ':' + ss;
-    if (el >= MW && !sUn) { clearInterval(sTmr); sUnlock(); }
-  }, 1000);
 }
 
 function sForceUnlock() {
-  sPct = 100;
-  if (sTmr) clearInterval(sTmr);
-  document.getElementById('svprogfill').style.width = '100%';
-  document.getElementById('lprogfill').style.width  = '100%';
-  sUnlock();
+  sUn = true;
+
+  // Sakrij lock overlay
+  document.getElementById('sformlock').style.display = 'none';
+
+  // Collapse video
+  var area = document.getElementById('video-collapse-area');
+  var btn = document.getElementById('video-toggle-btn');
+  if (area && btn && area.style.display !== 'none') {
+    area.style.display = 'none';
+    btn.innerHTML = 'Rasklopi video &#9660;';
+  }
+
+  // Update header
+  var st = document.getElementById('svstatus');
+  st.textContent = '✅ Video odgledan';
+  st.style.background = 'rgba(76,175,80,.35)';
+  st.style.color = '#b9f6ca';
+  document.getElementById('svpct').textContent = '';
+
+  // Write timer čeka prvi keystroke
+  sWriteStart = null; sWriteSec = 0;
+  if (sWriteTmr) { clearInterval(sWriteTmr); sWriteTmr = null; }
+
+  // Toast oblačić
+  var t = document.createElement('div');
+  t.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#4caf50;color:#fff;padding:13px 32px;border-radius:10px;font-weight:bold;z-index:9997;box-shadow:0 4px 20px rgba(0,0,0,.35);font-size:1.05em';
+  t.textContent = '✅ Možete popuniti obrazac!';
+  document.body.appendChild(t);
+  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3200);
+
+  document.getElementById('snextsec').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function toggleDarkMode() {
@@ -329,34 +326,6 @@ function toggleDarkMode() {
   const btn = document.getElementById('dark-toggle');
   btn.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light' : '🌙 Dark';
   localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? '1' : '0');
-}
-
-function sUnlock() {
-  sUn = true;
-  document.getElementById('sformlock').style.display = 'none';
-
-    // Automatski skupi video kad se otkljuca forma
-    var area = document.getElementById('video-collapse-area');
-    var btn = document.getElementById('video-toggle-btn');
-    if (area && btn && area.style.display !== 'none') {
-        area.style.display = 'none';
-        btn.innerHTML = 'Rasklopi video &#9660;';
-    }
-
-  var st = document.getElementById('svstatus');
-  st.textContent = '✅ Video odgledan';
-  st.style.background = 'rgba(76,175,80,.35)';
-  st.style.color = '#b9f6ca';
-  // Write timer čeka prvi keystroke
-  sWriteStart = null; sWriteSec = 0;
-  if (sWriteTmr) clearInterval(sWriteTmr); sWriteTmr = null;
-  var t = document.createElement('div');
-  t.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#4caf50;color:#fff;padding:13px 32px;border-radius:10px;font-weight:bold;z-index:9997;box-shadow:0 4px 20px rgba(0,0,0,.35);font-size:1.05em';
-  t.textContent = '✅ Možete popuniti obrazac!';
-  document.body.appendChild(t);
-  setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3200);
-  document.getElementById('snextsec').style.display = 'block';
-  window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
 function eCSV(v) {
