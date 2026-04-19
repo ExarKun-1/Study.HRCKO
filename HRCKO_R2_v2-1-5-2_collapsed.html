@@ -2764,13 +2764,13 @@
             if (normId === 'fundus_norm' && _fundusAtro)     _segUnderAtro = true;
 
             const normEl = document.getElementById(normId);
+            const txEl   = document.getElementById(txtId);
+            const manual = txEl ? txEl.value.trim() : '';
             if (!_segUnderAtro && normEl && normEl.checked) {
                 if (manual) return defaultTxt + ' ' + (manual.endsWith('.') ? manual : manual + '.');
                 return defaultTxt;
             }
 
-            const txEl   = document.getElementById(txtId);
-            const manual = txEl ? txEl.value.trim() : '';
 
             if (upalaId) {
                 const uEl = document.getElementById(upalaId);
