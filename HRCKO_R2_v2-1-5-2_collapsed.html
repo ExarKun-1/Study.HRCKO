@@ -3,7 +3,7 @@
 <html lang="hr">
 <head>
 <meta charset="utf-8"/>
-<title>HRČKO STUDIJA v2.1.5-fix10</title>
+<title>HRČKO STUDIJA</title>
 <style>
         /* STILOVI */
         body { font-family: Arial, sans-serif; max-width: 950px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; }
@@ -373,7 +373,7 @@
 <div id="study-overlay">
 <div class="smodal">
   <div style="font-size:2.6em;margin-bottom:8px">&#128300;</div>
-  <h2>HR&#268;KO STUDIJA</h2><span style="font-size:0.65em;color:#90caf9;display:block;margin-top:-2px;">v2.1.5-fix10</span>
+  <h2>HR&#268;KO STUDIJA</h2>
   <span class="ssub">Inter-observer video rating study</span>
   <label>Rater ID <span style="color:#e53935">*</span>
     <input type="text" id="sinput-rater" placeholder="npr. R01" maxlength="10" oninput="this.value=this.value.toUpperCase()">
@@ -440,9 +440,12 @@
     <span id="svlevel" style="padding:2px 10px;border-radius:12px;background:rgba(255,255,255,.15)">&ndash;</span>
     <span id="svstatus">&#9208; Pokrenite video</span>
     <span id="svpct">0%</span>
+    <button id="video-toggle-btn" type="button" onclick="toggleVideoCollapse()" style="margin-left: 15px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); color: white; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: bold; transition: background 0.2s;">Skupi video &#9650;</button>
   </div>
+  <div id="video-collapse-area">
   <iframe id="svideo" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
   <div class="sprogbar"><div id="svprogfill"></div></div>
+  </div>
 </div>
 
 <div id="sformlock" style="display:none">
@@ -465,7 +468,7 @@
     <div class="sp-row" style="margin-top:4px;"><span class="sp-label">✍️ Pisanje:</span> <span class="sp-val" id="sp-trajanje">– min</span></div>
 </div>
 <div class="container">
-<h2>🔬 HRČKO STUDIJA <small style="font-size:0.4em;color:#999;font-weight:normal;">v2.1.5-fix10</small></h2>
+<h2>🔬 HRČKO STUDIJA</h2>
 <!-- 1. PREPROCEDURALNI DIO -->
 <section id="pre-section">
 <h3 class="collapsible-header" onclick="togglePreSection()">1. Preproceduralno <span class="pre-toggle-icon" id="pre-toggle-icon">▲</span></h3><div id="pre-summary"></div>
@@ -3410,6 +3413,11 @@ function sUnlock() {
   setTimeout(function(){t.style.opacity='0';t.style.transition='opacity .5s';setTimeout(function(){t.remove();},600);},3200);
   document.getElementById('snextsec').style.display = 'block';
   window.scrollTo({top: 0, behavior: 'smooth'});
+  // Auto-collapse video after unlock
+  var area = document.getElementById('video-collapse-area');
+  var btn = document.getElementById('video-toggle-btn');
+  if (area) area.style.display = 'none';
+  if (btn) btn.innerHTML = 'Rasklopi video &#9660;';
 }
 
 function sForceUnlock() {
@@ -3418,6 +3426,19 @@ function sForceUnlock() {
   document.getElementById('svprogfill').style.width = '100%';
   document.getElementById('lprogfill').style.width  = '100%';
   sUnlock();
+}
+
+function toggleVideoCollapse() {
+    var area = document.getElementById('video-collapse-area');
+    var btn = document.getElementById('video-toggle-btn');
+    if (!area || !btn) return;
+    if (area.style.display === 'none') {
+        area.style.display = 'block';
+        btn.innerHTML = 'Skupi video &#9650;';
+    } else {
+        area.style.display = 'none';
+        btn.innerHTML = 'Rasklopi video &#9660;';
+    }
 }
 
 function eCSV(v) {
@@ -3473,7 +3494,7 @@ function sDownloadCSV() {
 }
 
 function sFormReset() {
-  document.title = "RESET FIRED - fix10 " + new Date().toLocaleTimeString();
+  
   // Reset sve checkboxeve i radio gumbe
   document.querySelectorAll('input[type=checkbox]').forEach(function(el){ el.checked = false; });
   document.querySelectorAll('input[type=radio]').forEach(function(el){ el.checked = false; });
