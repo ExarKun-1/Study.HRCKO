@@ -452,12 +452,10 @@
   <div class="lockbox">
     <span class="licon">&#127916;</span>
     <h3>Pogledajte video</h3>
-    <p>Pritisnite <strong>&#9654; Play</strong> na videu.<br>Forma se otklju&#269;ava automatski.</p>
-    <div id="lprogwrap"><div id="lprogfill"></div></div>
-    <small id="lprogtxt">Pokrenite video...</small>
+    <p>Pogledajte video, a zatim kliknite gumb ispod za popunjavanje obrasca.</p>
     <div id="vidwarn"></div>
-    <br><br>
-    <button onclick="sForceUnlock()" style="background:none;border:1px dashed #ccc;color:#bbb;padding:5px 14px;border-radius:5px;cursor:pointer;font-size:.78em">Problem s videom? Otklju&#269;aj ru&#269;no</button>
+    <br>
+    <button onclick="sForceUnlock()" style="background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;border:none;padding:14px 28px;border-radius:9px;font-size:1.05em;font-weight:bold;cursor:pointer;">&#9998; Otvori obrazac za pisanje</button>
   </div>
 </div>
 
@@ -3337,8 +3335,6 @@ function sStart() {
   document.getElementById('svstatus').style.color = '';
   document.getElementById('svpct').textContent = '0%';
   document.getElementById('svprogfill').style.width = '0%';
-  document.getElementById('lprogfill').style.width  = '0%';
-  document.getElementById('lprogtxt').textContent = 'Pokrenite video...';
   document.getElementById('snextsec').style.display = 'none';
   var raw  = SC[sC] || '';
   var parts = raw.split('|');
@@ -3382,7 +3378,6 @@ function sStart() {
     if (sum) { updatePreSummary(); sum.classList.add('visible'); }
   })();
   document.getElementById('sformlock').style.display = 'flex';
-  sTicker();
 }
 
 function sTicker() {
@@ -3422,17 +3417,29 @@ function sUnlock() {
   st.textContent = '✅ Video odgledan';
   st.style.background = 'rgba(76,175,80,.35)';
   st.style.color = '#b9f6ca';
-  // Start writing timer
-  sWriteStart = Date.now();
+  // Write timer — starts on first actual input, not on unlock
+  sWriteStart = null;
   sWriteSec = 0;
   if (sWriteTmr) clearInterval(sWriteTmr);
-  sWriteTmr = setInterval(function() {
-    sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
-    var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
-    var ws = String(sWriteSec%60).padStart(2,'0');
-    var el = document.getElementById('sp-trajanje');
-    if (el) el.textContent = wm + ':' + ws + ' min';
-  }, 1000);
+  sWriteTmr = null;
+  function startWriteOnInput() {
+    if (sWriteStart) return;
+    sWriteStart = Date.now();
+    sWriteTmr = setInterval(function() {
+      sWriteSec = Math.floor((Date.now() - sWriteStart) / 1000);
+      var wm = String(Math.floor(sWriteSec/60)).padStart(2,'0');
+      var ws = String(sWriteSec%60).padStart(2,'0');
+      var el = document.getElementById('sp-trajanje');
+      if (el) el.textContent = wm + ':' + ws + ' min';
+    }, 1000);
+  }
+  ['findings-section','peri-section','post-section'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', startWriteOnInput, { once: true });
+      el.addEventListener('change', startWriteOnInput, { once: true });
+    }
+  });
   var t = document.createElement('div');
   t.style.cssText = 'position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#4caf50;color:#fff;padding:13px 32px;border-radius:10px;font-weight:bold;z-index:9997;box-shadow:0 4px 20px rgba(0,0,0,.35);white-space:nowrap;font-size:1.05em';
   t.textContent = '✅ Možete popuniti obrazac!';
@@ -3446,7 +3453,6 @@ function sForceUnlock() {
   sPct = 100;
   if (sTmr) clearInterval(sTmr);
   document.getElementById('svprogfill').style.width = '100%';
-  document.getElementById('lprogfill').style.width  = '100%';
   sUnlock();
 }
 
