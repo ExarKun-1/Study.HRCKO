@@ -3559,6 +3559,24 @@ function sFormReset() {
   });
   document.querySelectorAll('.inflam-opts').forEach(function(el){ el.classList.add('hidden'); });
 
+  // ====== RESET MULTI-INSTANCE POLIPS/ULKUSI ======
+  // Remove dynamically added extra polip/ulkus instances
+  document.querySelectorAll('[id^="paris_extra_"], [id^="ulkus_extra_"]').forEach(function(el){ el.remove(); });
+  // Clear the containers
+  document.querySelectorAll('[id^="more_polips_"], [id^="more_ulkusi_"]').forEach(function(el){ el.innerHTML = ''; });
+  // Reset multi-count tracker
+  if (typeof _multiCount !== 'undefined') { for (var k in _multiCount) delete _multiCount[k]; }
+  // Reset varices, reflux, barrett, erefs, zargar, divertikul, inlet panels
+  document.querySelectorAll('.varices-inner, .la-panel, .barrett-panel, .zargar-panel').forEach(function(el){
+    el.classList.add('hidden'); el.classList.remove('visible');
+  });
+  var erefsP = document.getElementById('erefs_panel');
+  if (erefsP) { erefsP.classList.add('hidden'); erefsP.classList.remove('visible'); }
+  var divP = document.getElementById('divertikul_opts');
+  if (divP) { divP.classList.add('hidden'); divP.classList.remove('visible'); }
+  var inletW = document.getElementById('wrap_inlet');
+  if (inletW) { inletW.className = 'hidden'; }
+
   // GRACE score reset na default 3
   ['grace_e','grace_g','grace_d'].forEach(function(id){
     var el = document.getElementById(id);
